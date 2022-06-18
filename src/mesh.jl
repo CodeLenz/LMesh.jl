@@ -29,12 +29,12 @@ mutable struct Mesh2D <: Mesh
    free_dofs::Vector{Int64}
  
    # Dictionary
-   options::Dict{Symbol,Matrix{Float64}}
+   options::Dict{Symbol,Array{Float64}}
 
    # Default constructor
    function Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
-                   nbc::Matrix{Float64};options::Dict{Symbol,Matrix{Float64}})
+                   nbc::Matrix{Float64};options=Dict{Symbol,Array{Float64}}())
     
             # Dimensions
             nmat = length(materials)
@@ -90,7 +90,7 @@ mutable struct Mesh3D <: Mesh
    # Default constructor
    function Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
-                   nbc::Matrix{Float64};options::Dict{Symbol,Matrix{Float64}})
+                   nbc::Matrix{Float64};options=Dict{Symbol,Array{Float64}}())
 
       # Dimensions
       nmat = length(materials)
