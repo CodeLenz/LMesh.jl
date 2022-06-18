@@ -13,6 +13,6 @@ module LMesh
    # Exports
    export Material, Geometry
    export Mesh, Mesh2D, Mesh3D
-   export Free_DOFs, Plot_structure
+   export Free_DOFs #, Plot_structure
 
 end # module LMesh
