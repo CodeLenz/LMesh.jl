@@ -41,5 +41,5 @@ function Plot_structure(mesh::Mesh;
                         cutout = 1E-3,
                         name=""
                         )
-    Plot_structure(mesh.bmesh; U=U, dscale=dscale, x=x, N=N, cutout=cutout,name=name)
+    BMesh.Plot_structure(mesh.bmesh; U=U, dscale=dscale, x=x, N=N, cutout=cutout,name=name)
 end
