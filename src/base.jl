@@ -29,3 +29,17 @@ function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
   return livres, length(livres)
      
 end
+
+#
+# Driver to use Plot_structure using mesh directly
+#
+function Plot_structure(mesh::Mesh;
+                        U=[],
+                        dscale = 0.0,
+                        x=[],
+                        N = [],
+                        cutout = 1E-3,
+                        name=""
+                        )
+    Plot_structure(mesh.bmesh; U=U, dscale=dscale, x=x, N=N, cutout=cutout,name=name)
+end
