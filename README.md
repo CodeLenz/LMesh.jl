@@ -32,4 +32,14 @@ m2D = Mesh2D(b2,mat,geo,apoios2,forcas)
 #Create a 3D mesh
 m3D = Mesh3D(b3,mat,geo,apoios3,forcas)
 
+# It is possible to define general inputs 
+# as a dictionary {Symbol,Array{Float64}}
+options = Dict{Symbol,Array{Float64}}
+
+options[:Stiffness] = [1 1 1E5 ; 10 1 1E3]
+options[:Displacement] = [1 1 1E-3]
+
+m2opt = Mesh2D(b2,mat,geo,apoios2,forcas; options=options)
+
+
 ```
