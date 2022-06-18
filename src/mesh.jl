@@ -27,11 +27,14 @@ mutable struct Mesh2D <: Mesh
    # Free dofs
    ngls::Int64
    free_dofs::Vector{Int64}
+ 
+   # Dictionary
+   options::Dict{Symbol,Array{Float64}}
 
    # Default constructor
    function Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
-                   nbc::Matrix{Float64})
+                   nbc::Matrix{Float64};options=Dict{Symbol,Array{Float64}})
     
             # Dimensions
             nmat = length(materials)
@@ -48,7 +51,7 @@ mutable struct Mesh2D <: Mesh
             free_dofs, ngls = Free_DOFs(bmesh,nebc,ebc)
 
             # Create the type
-            new(bmesh,nmat,materials,ngeo,geometries,nebc,ebc,nnbc,nbc,ngls,free_dofs)
+            new(bmesh,nmat,materials,ngeo,geometries,nebc,ebc,nnbc,nbc,ngls,free_dofs,options)
    end
 end
 
@@ -81,10 +84,13 @@ mutable struct Mesh3D <: Mesh
    ngls::Int64
    free_dofs::Vector{Int64}
 
+   # Dictionary
+   options::Dict{Symbol,Array{Float64}}
+
    # Default constructor
    function Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
-                   nbc::Matrix{Float64})
+                   nbc::Matrix{Float64};options=Dict{Symbol,Array{Float64}})
 
       # Dimensions
       nmat = length(materials)
@@ -101,7 +107,7 @@ mutable struct Mesh3D <: Mesh
       free_dofs, ngls = Free_DOFs(bmesh,nebc,ebc)
 
       # Create the type
-      new(bmesh,nmat,materials,ngeo,geometries,nebc,ebc,nnbc,nbc,ngls,free_dofs)
+      new(bmesh,nmat,materials,ngeo,geometries,nebc,ebc,nnbc,nbc,ngls,free_dofs,options)
    end
 
 end
