@@ -3,7 +3,7 @@ Basic building block for other codes
 
 ```julia
 
-using BMesh, LMesh
+using BMesh, LMesh, Plots
 
 #Create two backgound meshes
 b2 = Bmesh_truss_2D(1.0,2,1.0,2)
@@ -40,6 +40,9 @@ options[:Stiffness] = [1 1 1E5 ; 10 1 1E3]
 options[:Displacement] = [1 1 1E-3]
 
 m2opt = Mesh2D(b2,mat,geo,apoios2,forcas; options=options)
+
+# Plots:plot is also overloaded
+plot(m3D)
 
 
 ```
