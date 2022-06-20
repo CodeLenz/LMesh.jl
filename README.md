@@ -41,7 +41,8 @@ options[:Displacement] = [1 1 1E-3]
 
 m2opt = Mesh2D(b2,mat,geo,apoios2,forcas; options=options)
 
-# Plots:plot is also overloaded
+# Plots:plot is also overloaded and shows 
+# both essential and natural boundary conditions
 plot(m3D)
 
 
