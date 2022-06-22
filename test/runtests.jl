@@ -10,3 +10,6 @@ include("test_geometry.jl")
 
 # Base - Free_DOFs
 include("test_base.jl")
+
+# Structres
+include("test_mesh.jl")
