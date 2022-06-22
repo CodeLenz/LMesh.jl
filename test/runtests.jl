@@ -7,3 +7,6 @@ include("test_material.jl")
 
 # Geometry
 include("test_geometry.jl")
+
+# Base - Free_DOFs
+include("test_base.jl")
