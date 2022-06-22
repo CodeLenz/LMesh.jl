@@ -105,7 +105,7 @@
     gg = Geometry[]   
     @test_throws String Mesh3D(b3,materials,gg,ebc,nbc)
        
-    # nebc>=6 || throw("Mesh3D:: at least six essential boundary conditions are needed in 3D")
+    # nebc>=5 || throw("Mesh3D:: at least five essential boundary conditions are needed in 3D")
     ee = [1 2 0.0]
     @test_throws String Mesh3D(b3,materials,geometries,ee,nbc)
        
