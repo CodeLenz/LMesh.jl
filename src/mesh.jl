@@ -101,7 +101,7 @@ mutable struct Mesh3D <: Mesh
       # Basic tests
       nmat>=1 || throw("Mesh3D::number of material properties must be >=1")
       ngeo>=1 || throw("Mesh3D::number of geometries properties must be >=1")
-      nebc>=6 || throw("Mesh3D:: at least six essential boundary conditions are needed in 3D ")
+      nebc>=5 || throw("Mesh3D:: at least five essential boundary conditions are needed in 3D ")
 
       # Free dofs and effective number of gls
       free_dofs, ngls = Free_DOFs(bmesh,nebc,ebc)
