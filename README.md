@@ -10,7 +10,7 @@ b2 = Bmesh_truss_2D(1.0,2,1.0,2)
 b3 = Bmesh_truss_3D(1.0,2,1.0,2,1.0,2)
 
 #Create a vector with two materials
-mat = [Material(Ex=210E9) ; Material(Ex=110E9)]
+mat = [Material(Ex=210E9,density=7850.0) ; Material(Ex=110E9,density=4150.0)]
 
 #Create a vector with two geometries
 geo = [Geometry(A=1E-4) ; Geometry(A=1E-5)]
