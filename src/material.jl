@@ -12,14 +12,18 @@ struct Material
     # thermal expansion
     α::Float64
 
-    # Default constructor
-    function Material(;Ex=0.0,νxy=0.0, α=0.0)
+    # Density (specific weight)
+    density::Float64
 
-        # Basic test
+    # Default constructor
+    function Material(;Ex=1.0,νxy=0.0, α=0.0, density=1.0)
+
+        # Basic test2
         Ex>0.0 || throw("Material:: Ex must be > 0")
+        density>0.0 || throw("Material:: density must be > 0")
 
         # create type
-        new(Ex,νxy,α)
+        new(Ex,νxy,α,density)
 
     end
 
