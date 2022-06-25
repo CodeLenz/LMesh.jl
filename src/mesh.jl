@@ -113,6 +113,12 @@ mutable struct Mesh3D <: Mesh
    ngls::Int64
    free_dofs::Vector{Int64}
 
+   # Map element to material
+   mat_ele::Vector{Int64}
+  
+   # Map element to geometry
+   geo_ele::Vector{Int64}
+ 
    # Dictionary
    options::Dict{Symbol,Matrix{Float64}}
 
