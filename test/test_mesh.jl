@@ -28,7 +28,7 @@
            4 1 0.0]
     nbc = [1 2 -100.0] 
  
-    materials = [Material(Ex=1.0), Material(Ex=1.0,dens=7000.0) ]
+    materials = [Material(Ex=1.0), Material(Ex=1.0,density=7000.0) ]
     geometries = [Geometry(A=1.0), Geometry(A=2.0), Geometry(A=3.0)]
 
     # Valid tests
@@ -115,7 +115,7 @@
            7 3 0.0 ; 
            8 1 0.0 ]
 
-    materials = [Material(Ex=1.0), Material(Ex=1.0,dens=7000.0) ]
+    materials = [Material(Ex=1.0), Material(Ex=1.0,density=7000.0) ]
     geometries = [Geometry(A=1.0), Geometry(A=2.0), Geometry(A=3.0)]
        
     # Valid tests
