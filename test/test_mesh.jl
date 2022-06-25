@@ -41,10 +41,10 @@
     @test Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
     
     geo_ele = [1;1;1;1;1;1]
-    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    @test Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
     
     geo_ele = [1;1;3;3;2;1]
-    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    @test Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
     
 
     # # Basic tests
@@ -72,9 +72,13 @@
     mat_ele = [1;1;3;1;1;1]
     @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
     
+    # Should throw (negative geometry pointer)
+    geo_ele = [1;1;1;-1;1;1]
+    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    
     # Should throw (invalid geometry)
-    mat_geo = [1;1;1;4;1;1]
-    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    geo_ele = [1;1;1;4;1;1]
+    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
     
     
     ####################   3D BMesh ######################
@@ -128,10 +132,10 @@
     @test Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
     
     geo_ele = [1;1;1;1;1;1]
-    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    @test Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
     
     geo_ele = [1;1;3;3;2;1]
-    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    @test Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
     
        
     #  Basic tests
@@ -155,8 +159,12 @@
     mat_ele = [1;1;3;1;1;1]
     @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
     
+    # Should throw (negative pointer)
+    geo_ele = [1;1;1;-1;1;1]
+    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    
     # Should throw (invalid geometry)
-    mat_geo = [1;1;1;4;1;1]
-    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    geo_ele = [1;1;1;4;1;1]
+    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
     
 end
