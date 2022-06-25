@@ -61,8 +61,8 @@ mutable struct Mesh2D <: Mesh
                fill!(mat_ele,1)
             else
                length(mat_ele)==bmesh.ne || throw("Mesh2D::mat_ele should have the same size of the number of elements")
-               minimum(mat_ele)>0 || throw("Mesh2D::mat_ele should point to a valid material")
-               maximum(mat_ele)<nmat || throw("Mesh2D::mat_ele should point to a valid material")
+               minimum(mat_ele)>0 || throw("Mesh2D::mat_ele should point to a valid material (>0)")
+               maximum(mat_ele)<=nmat || throw("Mesh2D::mat_ele should point to a valid material (<$nmat)")
             end
       
             # Process geo_ele 
@@ -71,8 +71,8 @@ mutable struct Mesh2D <: Mesh
                fill!(geo_ele,1)
             else
                length(geo_ele)==bmesh.ne || throw("Mesh2D::geo_ele should have the same size of the number of elements")
-               minimum(geo_ele)>0 || throw("Mesh2D::geo_ele should point to a valid geometry")
-               maximum(geo_ele)<ngeo || throw("Mesh2D::geo_ele should point to a valid geometry")
+               minimum(geo_ele)>0 || throw("Mesh2D::geo_ele should point to a valid geometry (>0)")
+               maximum(geo_ele)<=ngeo || throw("Mesh2D::geo_ele should point to a valid geometry (<$ngeo)")
             end
       
       
@@ -140,8 +140,8 @@ mutable struct Mesh3D <: Mesh
          fill!(mat_ele,1)
       else
           length(mat_ele)==bmesh.ne || throw("Mesh3D::mat_ele should have the same size of the number of elements")
-          minimum(mat_ele)>0 || throw("Mesh3D::mat_ele should point to a valid material")
-          maximum(mat_ele)<nmat || throw("Mesh3D::mat_ele should point to a valid material")
+          minimum(mat_ele)>0 || throw("Mesh3D::mat_ele should point to a valid material (>0)")
+          maximum(mat_ele)<=nmat || throw("Mesh3D::mat_ele should point to a valid material (<$nmat)")
       end
       
       # Process geo_ele 
@@ -150,8 +150,8 @@ mutable struct Mesh3D <: Mesh
           fill!(geo_ele,1)
       else
           length(geo_ele)==bmesh.ne || throw("Mesh3D::geo_ele should have the same size of the number of elements")
-          minimum(geo_ele)>0 || throw("Mesh2D::geo_ele should point to a valid geometry")
-          maximum(geo_ele)<ngeo || throw("Mesh2D::geo_ele should point to a valid geometry")
+          minimum(geo_ele)>0 || throw("Mesh2D::geo_ele should point to a valid geometry (>0)")
+          maximum(geo_ele)<=ngeo || throw("Mesh2D::geo_ele should point to a valid geometry (<$ngeo)")
        end
 
       
