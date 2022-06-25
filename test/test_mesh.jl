@@ -28,11 +28,24 @@
            4 1 0.0]
     nbc = [1 2 -100.0] 
  
-    materials = [Material(Ex=1.0)]
-    geometries = [Geometry(A=1.0)]
+    materials = [Material(Ex=1.0), Material(Ex=1.0,dens=7000.0) ]
+    geometries = [Geometry(A=1.0), Geometry(A=2.0), Geometry(A=3.0)]
 
-    # Valid test
+    # Valid tests
     @test isa(Mesh2D(b2,materials,geometries,ebc,nbc),Mesh2D)
+
+    mat_ele = [1;1;1;1;1;1]
+    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+   
+    mat_ele = [1;2;1;2;1;2]
+    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    
+    geo_ele = [1;1;1;1;1;1]
+    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    
+    geo_ele = [1;1;3;3;2;1]
+    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    
 
     # # Basic tests
     # nmat>=1 || throw("Mesh2D::number of material properties must be >=1")
@@ -51,7 +64,19 @@
           2 2 0.0]
     @test_throws String Mesh2D(b2,materials,geometries,ee,nbc)
 
-
+    # Should throw (negative material pointer)
+    mat_ele = [-1;1;1;1;1;1]
+    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    
+    # Should throw (invalid material)
+    mat_ele = [1;1;3;1;1;1]
+    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    
+    # Should throw (invalid geometry)
+    mat_geo = [1;1;1;4;1;1]
+    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    
+    
     ####################   3D BMesh ######################
     #
     #    Valid inputs (no error) 
@@ -90,11 +115,24 @@
            7 3 0.0 ; 
            8 1 0.0 ]
 
-    materials = [Material(Ex=1.0)]
-    geometries = [Geometry(A=1.0)]
+    materials = [Material(Ex=1.0), Material(Ex=1.0,dens=7000.0) ]
+    geometries = [Geometry(A=1.0), Geometry(A=2.0), Geometry(A=3.0)]
        
-    # Valid test
+    # Valid tests
     @test isa(Mesh3D(b3,materials,geometries,ebc,nbc),Mesh3D)
+    
+    mat_ele = [1;1;1;1;1;1]
+    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+   
+    mat_ele = [1;2;1;2;1;2]
+    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    
+    geo_ele = [1;1;1;1;1;1]
+    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    
+    geo_ele = [1;1;3;3;2;1]
+    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    
        
     #  Basic tests
     # nmat>=1 || throw("Mesh3D::number of material properties must be >=1")
@@ -109,4 +147,16 @@
     ee = [1 2 0.0]
     @test_throws String Mesh3D(b3,materials,geometries,ee,nbc)
        
+    # Should throw (negative material pointer)
+    mat_ele = [-1;1;1;1;1;1]
+    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    
+    # Should throw (invalid material)
+    mat_ele = [1;1;3;1;1;1]
+    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    
+    # Should throw (invalid geometry)
+    mat_geo = [1;1;1;4;1;1]
+    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_geo=mat_geo)
+    
 end
