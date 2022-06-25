@@ -35,16 +35,16 @@
     @test isa(Mesh2D(b2,materials,geometries,ebc,nbc),Mesh2D)
 
     mat_ele = [1;1;1;1;1;1]
-    @test Mesh2D(b2,materials,geometries,ebc,nbc,mat_ele=mat_ele)
+    @test isa(Mesh2D(b2,materials,geometries,ebc,nbc,mat_ele=mat_ele),Mesh2D)
    
     mat_ele = [1;2;1;2;1;2]
-    @test Mesh2D(b2,materials,geometries,ebc,nbc,mat_ele=mat_ele)
+    @test isa(Mesh2D(b2,materials,geometries,ebc,nbc,mat_ele=mat_ele),Mesh2D)
     
     geo_ele = [1;1;1;1;1;1]
-    @test Mesh2D(b2,materials,geometries,ebc,nbc,geo_ele=geo_ele)
+    @test isa(Mesh2D(b2,materials,geometries,ebc,nbc,geo_ele=geo_ele),Mesh2D)
     
     geo_ele = [1;1;3;3;2;1]
-    @test Mesh2D(b2,materials,geometries,ebc,nbc,geo_ele=geo_ele)
+    @test isa(Mesh2D(b2,materials,geometries,ebc,nbc,geo_ele=geo_ele),Mesh2D)
     
 
     # # Basic tests
@@ -126,16 +126,16 @@
     @test isa(Mesh3D(b3,materials,geometries,ebc,nbc),Mesh3D)
     
     mat_ele = [1;1;1;1;1;1]
-    @test Mesh3D(b3,materials,geometries,ebc,nbc,mat_ele=mat_ele)
+    @test isa(Mesh3D(b3,materials,geometries,ebc,nbc,mat_ele=mat_ele),Mesh3D)
    
     mat_ele = [1;2;1;2;1;2]
-    @test Mesh3D(b3,materials,geometries,ebc,nbc,mat_ele=mat_ele)
+    @test isa(Mesh3D(b3,materials,geometries,ebc,nbc,mat_ele=mat_ele),Mesh3D)
     
     geo_ele = [1;1;1;1;1;1]
-    @test Mesh3D(b3,materials,geometries,ebc,nbc,geo_ele=geo_ele)
+    @test isa(Mesh3D(b3,materials,geometries,ebc,nbc,geo_ele=geo_ele),Mesh3D)
     
     geo_ele = [1;1;3;3;2;1]
-    @test Mesh3D(b3,materials,geometries,ebc,nbc,geo_ele=geo_ele)
+    @test isa(Mesh3D(b3,materials,geometries,ebc,nbc,geo_ele=geo_ele),Mesh3D)
     
        
     #  Basic tests
