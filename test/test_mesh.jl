@@ -35,16 +35,16 @@
     @test isa(Mesh2D(b2,materials,geometries,ebc,nbc),Mesh2D)
 
     mat_ele = [1;1;1;1;1;1]
-    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test Mesh2D(b2,materials,geometries,ebe,nbc,mat_ele=mat_ele)
    
     mat_ele = [1;2;1;2;1;2]
-    @test Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test Mesh2D(b2,materials,geometries,ebe,nbc,mat_ele=mat_ele)
     
     geo_ele = [1;1;1;1;1;1]
-    @test Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test Mesh2D(b2,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
     geo_ele = [1;1;3;3;2;1]
-    @test Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test Mesh2D(b2,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
 
     # # Basic tests
@@ -66,19 +66,19 @@
 
     # Should throw (negative material pointer)
     mat_ele = [-1;1;1;1;1;1]
-    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test_throws String Mesh2D(b2,materials,geometries,ebe,nbc,mat_ele=mat_ele)
     
     # Should throw (invalid material)
     mat_ele = [1;1;3;1;1;1]
-    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test_throws String Mesh2D(b2,materials,geometries,ebe,nbc,mat_ele=mat_ele)
     
     # Should throw (negative geometry pointer)
     geo_ele = [1;1;1;-1;1;1]
-    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test_throws String Mesh2D(b2,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
     # Should throw (invalid geometry)
     geo_ele = [1;1;1;4;1;1]
-    @test_throws String Mesh2D(b2,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test_throws String Mesh2D(b2,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
     
     ####################   3D BMesh ######################
@@ -126,16 +126,16 @@
     @test isa(Mesh3D(b3,materials,geometries,ebc,nbc),Mesh3D)
     
     mat_ele = [1;1;1;1;1;1]
-    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test Mesh3D(b3,materials,geometries,ebe,nbc,mat_ele=mat_ele)
    
     mat_ele = [1;2;1;2;1;2]
-    @test Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test Mesh3D(b3,materials,geometries,ebe,nbc,mat_ele=mat_ele)
     
     geo_ele = [1;1;1;1;1;1]
-    @test Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test Mesh3D(b3,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
     geo_ele = [1;1;3;3;2;1]
-    @test Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test Mesh3D(b3,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
        
     #  Basic tests
@@ -153,18 +153,18 @@
        
     # Should throw (negative material pointer)
     mat_ele = [-1;1;1;1;1;1]
-    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test_throws String Mesh3D(b3,materials,geometries,ebe,nbc,mat_ele=mat_ele)
     
     # Should throw (invalid material)
     mat_ele = [1;1;3;1;1;1]
-    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,mat_ele=mat_ele)
+    @test_throws String Mesh3D(b3,materials,geometries,ebe,nbc,mat_ele=mat_ele)
     
     # Should throw (negative pointer)
     geo_ele = [1;1;1;-1;1;1]
-    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test_throws String Mesh3D(b3,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
     # Should throw (invalid geometry)
     geo_ele = [1;1;1;4;1;1]
-    @test_throws String Mesh3D(b3,materials,geometries,ee,nbc,geo_ele=geo_ele)
+    @test_throws String Mesh3D(b3,materials,geometries,ebe,nbc,geo_ele=geo_ele)
     
 end
