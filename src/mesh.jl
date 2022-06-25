@@ -56,19 +56,21 @@ mutable struct Mesh2D <: Mesh
 
             
             # Process mat_ele 
-            if isempy(mat_ele)
+            if isempty(mat_ele)
                resize!(mat_ele,bmesh.ne)
                fill!(mat_ele,1)
             else
+               length(mat_ele)==bmesh.ne || throw("Mesh2D::mat_ele should have the same size of the number of elements")
                minimum(mat_ele)>0 || throw("Mesh2D::mat_ele should point to a valid material")
                maximum(mat_ele)<nmat || throw("Mesh2D::mat_ele should point to a valid material")
             end
       
             # Process geo_ele 
-            if isempy(geo_ele)
+            if isempty(geo_ele)
                resize!(geo_ele,bmesh.ne)
                fill!(geo_ele,1)
             else
+               length(mat_ele)==bmesh.ne || throw("Mesh2D::geo_ele should have the same size of the number of elements")
                minimum(geo_ele)>0 || throw("Mesh2D::geo_ele should point to a valid geometry")
                maximum(geo_ele)<ngeo || throw("Mesh2D::geo_ele should point to a valid geometry")
             end
@@ -133,19 +135,21 @@ mutable struct Mesh3D <: Mesh
 
       
       # Process mat_ele and geo_ele
-      if isempy(mat_ele)
+      if isempty(mat_ele)
          resize!(mat_ele,bmesh.ne)
          fill!(mat_ele,1)
       else
+          length(mat_ele)==bmesh.ne || throw("Mesh3D::mat_ele should have the same size of the number of elements")
           minimum(mat_ele)>0 || throw("Mesh3D::mat_ele should point to a valid material")
           maximum(mat_ele)<nmat || throw("Mesh3D::mat_ele should point to a valid material")
       end
       
       # Process geo_ele 
-      if isempy(geo_ele)
+      if isempty(geo_ele)
           resize!(geo_ele,bmesh.ne)
           fill!(geo_ele,1)
       else
+           length(mat_ele)==bmesh.ne || throw("Mesh3D::mat_ele should have the same size of the number of elements")
            minimum(geo_ele)>0 || throw("Mesh2D::geo_ele should point to a valid geometry")
            maximum(geo_ele)<ngeo || throw("Mesh2D::geo_ele should point to a valid geometry")
        end
