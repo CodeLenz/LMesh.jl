@@ -40,8 +40,8 @@ mutable struct Mesh2D <: Mesh
    # Default constructor
    function Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
-                   nbc::Matrix{Float64}, mat_ele = Int64[], geo_ele = Int64[] ;
-                   options=Dict{Symbol,Matrix{Float64}}())
+                   nbc::Matrix{Float64} ;
+                   mat_ele = Int64[], geo_ele = Int64[],  options=Dict{Symbol,Matrix{Float64}}())
     
             # Dimensions
             nmat = length(materials)
@@ -117,8 +117,8 @@ mutable struct Mesh3D <: Mesh
    # Default constructor
    function Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
-                   nbc::Matrix{Float64}, mat_ele = Int64[], geo_ele = Int64[] ;
-                   options=Dict{Symbol,Matrix{Float64}}())
+                   nbc::Matrix{Float64} ;
+                   mat_ele = Int64[], geo_ele = Int64[] ,  options=Dict{Symbol,Matrix{Float64}}())
 
       # Dimensions
       nmat = length(materials)
