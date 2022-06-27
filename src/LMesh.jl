@@ -15,7 +15,7 @@ module LMesh
    # Exports
    export Material, Geometry
    export Mesh, Mesh2D, Mesh3D
-   export Free_DOFs 
+   export Free_DOFs, Nodal_coordinates
    export plot
 
 end # module LMesh
