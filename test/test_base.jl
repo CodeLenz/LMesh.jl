@@ -183,5 +183,11 @@
     @assert all(x.==xref)
     @assert all(y.==yref)
     
+    #
+    # Test centoid
+    # 
+    cent = Centroid(m2,1)
+    @test cent[1]==(1+1.1)/4        
+    @test cent[2]==(1+1.1)/4
 
 end
