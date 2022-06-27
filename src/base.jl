@@ -86,3 +86,25 @@ function Nodal_coordinates(m::Mesh3D,ele)
 
    return x, y, z
 end
+
+# Centroid for a given element
+function Centroid(mesh::Mesh2D,ele)
+
+    # Coordinates
+    x,y = Nodal_coordinates(mesh,ele)
+
+    # Return mean values
+    [mean(x); mean(y)]
+
+end
+
+# Centroid for a given element
+function Centroid(mesh::Mesh3D,ele)
+
+    # Coordinates
+    x,y,z = Nodal_coordinates(mesh,ele)
+
+    # Return mean values
+    [mean(x); mean(y); mean(z)]
+
+end
