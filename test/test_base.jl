@@ -182,10 +182,6 @@
     yref = [0.0;0.0;1.1;1.0]
     @assert all(x.==xref)
     @assert all(y.==yref)
-
-  
-end
-
     
 
 end
