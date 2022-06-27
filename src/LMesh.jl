@@ -3,6 +3,7 @@ module LMesh
    # Dependency
    using BMesh
    using LinearAlgebra
+   using Statistics:mean
    using Plots
 
    # Local includes
