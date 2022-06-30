@@ -7,7 +7,7 @@ module LMesh
    using Plots
 
    # Local includes
-   include("overloaded_bmesh.jl")
+   include("overload_bmesh.jl")
    include("material.jl")
    include("geometry.jl")
    include("mesh.jl")
