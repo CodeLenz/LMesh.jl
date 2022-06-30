@@ -24,6 +24,7 @@ module LMesh
    export Conec,Coord,Length,DOFs,T_matrix
    export Free_DOFs, Nodal_coordinates, Centroid
    export Get_dim, Get_etype, Get_eclass
+   export Get_material, Get_geometry
    export plot
 
 end # module LMesh
