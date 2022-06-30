@@ -184,6 +184,10 @@
     @test Get_dim(m2)==2
     @test Get_etype(m2)==:solid2D
     @test Get_eclass(m2)==:solid
+  
+    @test Get_material(m2,1)==1
+    @test Get_geometry(m2,1)==1
+  
     
     # Nodal coordinates of element 1 
     x,y=Nodal_coordinates(m2,1)
