@@ -1,7 +1,6 @@
 @testset "Base" begin
 
-    # Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
-
+  
     ####################    2D BMesh ######################
     #
     #    Valid inputs (no error) 
@@ -28,7 +27,8 @@
            2 2 0.0 ; 
            3 2 0.0 ; 
            4 1 0.0]
-
+ 
+    
     # Free_DOFs 
     gls, ngls =  Free_DOFs(b2,nebc,ebc)
 
@@ -139,6 +139,11 @@
     @assert all(x.==xref)
     @assert all(y.==yref)
 
+    
+    @test Get_dim(m2)==2
+    @test Get_etype(m2)==:truss2D
+    @test Get_eclass(m2)==:truss
+    
 
     ####################  2D BMesh ######################
     # Square
@@ -176,6 +181,10 @@
     # Mesh
     m2 = Mesh2D(b2,materials,geometries,ebc,nbc)
 
+    @test Get_dim(m2)==2
+    @test Get_etype(m2)==:solid2D
+    @test Get_eclass(m2)==:solid
+    
     # Nodal coordinates of element 1 
     x,y=Nodal_coordinates(m2,1)
     xref = [0.0;1.0;1.1;0.0]
@@ -189,5 +198,9 @@
     cent = Centroid(m2,1)
     @test cent[1]==(1+1.1)/4        
     @test cent[2]==(1+1.1)/4
+    
+    # Test Get_dim
+    @test Get_dim(m2)==2
+    @test Get_dim(
 
 end
