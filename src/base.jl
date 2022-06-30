@@ -159,4 +159,29 @@ function Get_eclass(mesh::Mesh)
     return class
 end
 
+#
+# Return material for element ele
+#
+"""
+Material for element ele
 
+   Get_material(mesh::Mesh,ele::Int64)
+
+"""
+function Get_material(mesh::Mesh,ele::Int64)
+   mesh.mat_ele[ele]
+end
+
+
+#
+# Return geometry for element ele
+#
+"""
+Geometry for element ele
+
+   Get_geometry(mesh::Mesh,ele::Int64)
+
+"""
+function Get_geometry(mesh::Mesh,ele::Int64)
+   mesh.geo_ele[ele]
+end
