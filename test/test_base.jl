@@ -199,8 +199,6 @@
     @test cent[1]==(1+1.1)/4        
     @test cent[2]==(1+1.1)/4
     
-    # Test Get_dim
-    @test Get_dim(m2)==2
-    @test Get_dim(
+
 
 end
