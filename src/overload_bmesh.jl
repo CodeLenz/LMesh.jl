@@ -1,7 +1,7 @@
 #
 # Overload some functions defined in BMesh
 #
-import BMesh:Conec
+import BMesh:Conect
 """
 (Overloaded from BMesh)
 Return the connectivities of element ele
