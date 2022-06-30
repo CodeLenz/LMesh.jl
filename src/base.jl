@@ -108,3 +108,55 @@ function Centroid(mesh::Mesh3D,ele)
     [mean(x); mean(y); mean(z)]
 
 end
+
+#
+# Dimensionality 
+#
+"""
+Return 2 for 2D problems and 3 for 3D problems
+   
+   Get_dim(mesh::Mesh)
+
+"""
+function Get_dim(mesh::Mesh)
+  
+    elseif(isa(mesh,Mesh2D),2,3)
+  
+end
+
+
+#
+# Element type
+#
+"""
+Return element type
+   
+   Get_etype(mesh::Mesh)
+
+"""
+function Get_etype(mesh::Mesh)
+  
+    mesh.bmesh.etype
+  
+end
+
+#
+# Element class
+#
+"""
+Return truss or solid
+   
+   Get_eclass(mesh::Mesh)
+
+"""
+function Get_eclass(mesh::Mesh)
+  
+    class = :truss
+    etype = Get_etype(mesh)
+    if etype==:solid2D || etype==:solid3D
+       class = :solid
+    end
+    return class
+end
+
+
