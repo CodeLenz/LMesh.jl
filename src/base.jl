@@ -120,7 +120,7 @@ Return 2 for 2D problems and 3 for 3D problems
 """
 function Get_dim(mesh::Mesh)
   
-    elseif(isa(mesh,Mesh2D),2,3)
+    ifelse(isa(mesh,Mesh2D),2,3)
   
 end
 
