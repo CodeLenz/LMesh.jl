@@ -7,6 +7,7 @@ module LMesh
    using Plots
 
    # Local includes
+   include("overloaded_bmesh.jl")
    include("material.jl")
    include("geometry.jl")
    include("mesh.jl")
@@ -14,6 +15,7 @@ module LMesh
    include("show.jl")
 
    # Exports
+   export Conec,Coord,Length,DOFs,T_matrix
    export Material, Geometry
    export Mesh, Mesh2D, Mesh3D
    export Free_DOFs, Nodal_coordinates, Centroid
