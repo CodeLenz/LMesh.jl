@@ -29,6 +29,8 @@ struct Material
         density>0.0 || throw("Material:: density must be > 0")
         model in [:EPT,:EPD,:Custom] || throw("Material:: model must be :EPT or :EPD (for 2D analysis)")
 
+        model==:Custom && isempty(custom) || throw("Material:: model :Custom needs a custom constitutive matrix")
+        
         # create type
         new(Ex,νxy,α,density,model,custom)
 
