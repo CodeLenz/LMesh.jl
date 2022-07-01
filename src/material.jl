@@ -22,7 +22,7 @@ struct Material
     custom::Matrix{Float64}
     
     # Default constructor
-    function Material(;Ex=1.0,νxy=0.0, α=0.0, density=1.0, model=:EPT, custom=[1.0 1.0 ; 1.0 1.0)
+    function Material(;Ex=1.0,νxy=0.0, α=0.0, density=1.0, model=:EPT, custom=[1.0 1.0 ; 1.0 1.0])
 
         # Basic tests
         Ex>0.0 || throw("Material:: Ex must be > 0")
