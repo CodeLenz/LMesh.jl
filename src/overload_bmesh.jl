@@ -1,18 +1,18 @@
 #
 # Overload some functions defined in BMesh
 #
-import BMesh:Conect
+import BMesh:Connect
 """
 (Overloaded from BMesh)
 Return the connectivities of element ele
 
-    Conect(mesh::Mesh,ele::Int64)
+    Connect(mesh::Mesh,ele::Int64)
 
 as an Int64 vector.  
 """
-function Conect(mesh::Mesh,ele::Int64)
+function Connect(mesh::Mesh,ele::Int64)
 
-    BMesh.Conect(mesh.bmesh,ele)
+    BMesh.Connect(mesh.bmesh,ele)
 
 end
 
