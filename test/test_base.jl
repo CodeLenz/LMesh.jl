@@ -185,8 +185,11 @@
     @test Get_etype(m2)==:solid2D
     @test Get_eclass(m2)==:solid
   
-    @test Get_material(m2,1)==1
-    @test Get_geometry(m2,1)==1
+   
+    @test Get_material_number(m2,1)==1
+    @test Get_geometry_number(m2,1)==1
+    @test isa(Get_material(m2,1),Material)
+    @test isa(Get_geometry(m2,1),Geometry)
   
     
     # Nodal coordinates of element 1 
