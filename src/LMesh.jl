@@ -12,7 +12,7 @@ module LMesh
    include("material.jl")
    include("geometry.jl")
    include("mesh.jl")
-   include("iterators.j")
+   include("iterator.j")
    
    include("overload_bmesh.jl")
    include("base.jl")
@@ -21,7 +21,7 @@ module LMesh
    # Exports
    export Material, Geometry
    export Mesh, Mesh2D, Mesh3D
-   
+   export Base.iterator
    export Conec,Coord,Length,DOFs,T_matrix
    export Free_DOFs, Nodal_coordinates, Centroid
    export Get_dim, Get_etype, Get_eclass
