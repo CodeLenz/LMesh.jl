@@ -12,7 +12,7 @@ module LMesh
    include("material.jl")
    include("geometry.jl")
    include("mesh.jl")
-   include("iterator.j")
+   include("iterator.jl")
    
    include("overload_bmesh.jl")
    include("base.jl")
