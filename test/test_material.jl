@@ -19,10 +19,6 @@
    
     @test_throws String Material(model=:bla)
     
-    @test_throws String Material(custom=Int64[])
-    
-    @test_throws String Material(model=:Custom)
-    
     
     
 end
