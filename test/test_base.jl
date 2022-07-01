@@ -42,6 +42,9 @@
     @test ngls==4
     @test all(gls.==refer)
  
+    # Check inferred
+    @isinferred Free_DOFs(b2,nebc,ebc)
+
 
     ####################   3D BMesh ######################
     #
@@ -92,7 +95,10 @@
     # Check if it is correct
     @test ngls==18
     @test all(gls.==refer)
- 
+
+    # Check inferred
+    @isinferred Free_DOFs(b3,nebc,ebc)
+
     #
     # Nodal coordinates
     #
@@ -139,11 +145,18 @@
     @assert all(x.==xref)
     @assert all(y.==yref)
 
-    
+    # Check inferred
+    @isinferred Nodal_coordinates(m2,1)
+
+    # Check output
     @test Get_dim(m2)==2
     @test Get_etype(m2)==:truss2D
     @test Get_eclass(m2)==:truss
-    
+
+    # Check inferences
+    @isinferred Get_dim(m2)
+    @isinferred Get_etype(m2)
+    @isinferred Get_eclass(m2)
 
     ####################  2D BMesh ######################
     # Square
@@ -181,16 +194,27 @@
     # Mesh
     m2 = Mesh2D(b2,materials,geometries,ebc,nbc)
 
+    # Check output
     @test Get_dim(m2)==2
     @test Get_etype(m2)==:solid2D
     @test Get_eclass(m2)==:solid
   
-   
+    # Check inferences
+    @isinferred Get_dim(m2)
+    @isinferred Get_etype(m2)
+    @isinferred Get_eclass(m2)
+  
+    # Check output
     @test Get_material_number(m2,1)==1
     @test Get_geometry_number(m2,1)==1
     @test isa(Get_material(m2,1),Material)
     @test isa(Get_geometry(m2,1),Geometry)
   
+    # Check inferences
+    @isinferred Get_material_number(m2,1)
+    @isinferred Get_geometry_number(m2,1)
+    @isinferred Get_material(m2,1)
+    @isinferred Get_geometry(m2,1)
     
     # Nodal coordinates of element 1 
     x,y=Nodal_coordinates(m2,1)
@@ -206,6 +230,15 @@
     @test cent[1]==(1+1.1)/4        
     @test cent[2]==(1+1.1)/4
     
+    # Check inference
+    @isinferred Centroid(m2,1)
 
+    # Check output
+    @test Get_ne(m2)==m2.bmesh.ne
+    @test Get_nn(m2)==m2.bmesh.nn
 
+    # Check inference
+    @isinferred Get_ne(m2)
+    @isinferred Get_nn(m2)
+    
 end
