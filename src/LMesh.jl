@@ -27,6 +27,7 @@ module LMesh
    export Get_dim, Get_etype, Get_eclass
    export Get_material, Get_geometry
    export Get_material_number, Get_geometry_number
+   export Get_ne, Get_nn
    export plot
 
 end # module LMesh
