@@ -1,6 +1,13 @@
 #
 # Generic Linear, elastic and isotropic material
 #
+"""
+Basic structure to store material data
+
+    Material(;Ex=1.0,νxy=0.0, α=0.0, density=1.0, model=:EPT, custom=[1.0 1.0 ; 1.0 1.0])
+
+where all inputs are named.
+"""
 struct Material
 
     # Elastic module

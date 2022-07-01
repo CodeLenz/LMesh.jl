@@ -3,8 +3,17 @@
 # 2D
 #
 import Plots:plot
+"""
+Overload plot to show the mesh and boundary conditions.
+Just for truss elements.
+
+    plot(mesh::Mesh2D; name="", factor=6.0)
+
+factor is used to scale arrows to a fraction of the total dimension.
+"""
 function plot(mesh::Mesh2D; name="", factor=6.0)
    
+    Get_etype(mesh)==:truss2D || throw("plot(mesh):: just for trusses")
   
     # Local aliases
     bmesh = mesh.bmesh
@@ -109,6 +118,15 @@ end
 # 3D
 #
 import Plots:plot
+"""
+Overload plot to show the mesh and boundary conditions.
+Just for truss elements.
+
+    plot(mesh::Mesh3D; name="", factor=6.0)
+
+factor is used to scale arrows to a fraction of the total dimension.
+"""
+
 function plot(mesh::Mesh3D; name="", factor=6.0)
 
 

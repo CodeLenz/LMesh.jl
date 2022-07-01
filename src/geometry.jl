@@ -1,6 +1,14 @@
 #
 # Generic geometry
 #
+"""
+Basic structure to store geometrical data
+
+    Geometry(;A=1.0,thickness=1.0)
+
+where all inputs are named.
+"""
+
 struct Geometry
 
     # Cross section area

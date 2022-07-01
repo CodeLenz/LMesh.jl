@@ -1,6 +1,29 @@
+"""
+  Supertype for Mesh2D and Mesh3D
 
+"""
 abstract type Mesh end
 
+"""
+Basic structure for 2D Meshes
+
+   Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
+          geometries::Vector{Geometry},ebc::Matrix{Float64},
+          nbc::Matrix{Float64} ;
+          mat_ele = Int64[], geo_ele = Int64[], 
+          options=Dict{Symbol,Matrix{Float64}}())
+
+where
+
+   bmesh      = Background mesh (2D)
+   materials  = Vector with Materials definitions
+   geometries = Vector with Geometries definitions
+   ebc        = Matrix with essential boundary conditions
+   nbc        = Matrix with natural boundary conditions
+   mat_ele    = Vector linking each element to a given material
+   geo_ele    = Vector linking each element to a given geometry
+   options    = Dictionary with optional data
+"""
 mutable struct Mesh2D <: Mesh
 
    # Background mesh 
@@ -85,7 +108,26 @@ mutable struct Mesh2D <: Mesh
 end
 
 
+"""
+Basic structure for #D Meshes
 
+   Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
+          geometries::Vector{Geometry},ebc::Matrix{Float64},
+          nbc::Matrix{Float64} ;
+          mat_ele = Int64[], geo_ele = Int64[], 
+          options=Dict{Symbol,Matrix{Float64}}())
+
+where
+
+   bmesh      = Background mesh (3D)
+   materials  = Vector with Materials definitions
+   geometries = Vector with Geometries definitions
+   ebc        = Matrix with essential boundary conditions
+   nbc        = Matrix with natural boundary conditions
+   mat_ele    = Vector linking each element to a given material
+   geo_ele    = Vector linking each element to a given geometry
+   options    = Dictionary with optional data
+"""
 mutable struct Mesh3D <: Mesh
 
    # Background mesh 

@@ -2,6 +2,18 @@
 #
 # Usando os dados de apoios, monta o vetor de gls livres do problema
 #
+"""
+Return a vector with all the free (not constrained) DOFs in the mesh. 
+This function is used to build Mesh.free_dofs
+
+   Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
+
+where
+
+   bmesh    = background mesh
+   nebc     = number of essential boundary conditions
+   ebc      = matrix with essential boundary condition data
+"""
 function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
   
   # Dimensão da malha
@@ -17,7 +29,7 @@ function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
   todos = collect(1:dim*nnos)
    
   # Olha quem está sendo preso e coloca um -1 no lugar
-  for i=1:nebc
+  @inbounds for i=1:nebc
        no = Int(ebc[i,1])
        gl = Int(ebc[i,2])
        todos[dim*(no-1)+gl] = -1
@@ -33,6 +45,13 @@ end
 #
 # Find the coordinates x and y of a given element
 #
+"""
+Return vectors x and y with the nodal coordinates of element ele
+
+   Nodal_coordinates(m::Mesh2D,ele)
+
+where m is a 2D Mesh and ele a valid element.
+"""
 function Nodal_coordinates(m::Mesh2D,ele)
 
     # Alias
@@ -47,7 +66,7 @@ function Nodal_coordinates(m::Mesh2D,ele)
     # Coordinates 
     x = Vector{Float64}(undef,nn)
     y = Vector{Float64}(undef,nn)
-    for i=1:nn
+    @inbounds for i=1:nn
 
         # Local coordinates
         x[i],y[i] = Coord(bm,nodes[i])
@@ -61,6 +80,13 @@ end
 #
 # Find the coordinates x and y of a given element
 #
+"""
+Return vectors x, y and z with the nodal coordinates of element ele
+
+   Nodal_coordinates(m::Mesh3D,ele)
+
+where m is a 3D Mesh and ele a valid element.
+"""
 function Nodal_coordinates(m::Mesh3D,ele)
 
     # Alias
@@ -77,7 +103,7 @@ function Nodal_coordinates(m::Mesh3D,ele)
     y = Vector{Float64}(undef,nn)
     z = Vector{Float64}(undef,nn)
     
-    for i=1:nn
+    @inbounds for i=1:nn
 
         # Local coordinates
         x[i],y[i],z[i] = Coord(bm,nodes[i])
@@ -88,7 +114,13 @@ function Nodal_coordinates(m::Mesh3D,ele)
 end
 
 # Centroid for a given element
-function Centroid(mesh::Mesh2D,ele)
+"""
+Return a vector with the centroidal coordinates of element ele
+
+   Centroid(mesh::Mesh2D,ele::Int64)
+
+"""
+function Centroid(mesh::Mesh2D,ele::Int64)
 
     # Coordinates
     x,y = Nodal_coordinates(mesh,ele)
@@ -99,6 +131,12 @@ function Centroid(mesh::Mesh2D,ele)
 end
 
 # Centroid for a given element
+"""
+Return a vector with the centroidal coordinates of element ele
+
+   Centroid(mesh::Mesh3D,ele::Int64)
+   
+"""
 function Centroid(mesh::Mesh3D,ele)
 
     # Coordinates
@@ -123,7 +161,6 @@ function Get_dim(mesh::Mesh)
     ifelse(isa(mesh,Mesh2D),2,3)
   
 end
-
 
 #
 # Element type
