@@ -22,7 +22,7 @@ module LMesh
    export Material, Geometry
    export Mesh, Mesh2D, Mesh3D
    export Base.iterator
-   export Conec,Coord,Length,DOFs,T_matrix
+   export Conect,Coord,Length,DOFs,T_matrix
    export Free_DOFs, Nodal_coordinates, Centroid
    export Get_dim, Get_etype, Get_eclass
    export Get_material, Get_geometry
