@@ -39,7 +39,7 @@ function Nodal_coordinates(m::Mesh2D,ele)
     bm = m.bmesh
 
     # Nodes
-    nodes = Conect(bm,ele)
+    nodes = Connect(bm,ele)
 
     # Number of nodes
     nn = length(nodes)
@@ -67,7 +67,7 @@ function Nodal_coordinates(m::Mesh3D,ele)
     bm = m.bmesh
 
     # Nodes
-    nodes = Conect(bm,ele)
+    nodes = Connect(bm,ele)
 
     # Number of nodes
     nn = length(nodes)
