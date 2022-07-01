@@ -15,15 +15,22 @@ struct Material
     # Density (specific weight)
     density::Float64
 
+    # Model
+    model::Symbol
+    
+    # Custom constitutive matrix
+    custom::Matrix{Float64}
+    
     # Default constructor
-    function Material(;Ex=1.0,νxy=0.0, α=0.0, density=1.0)
+    function Material(;Ex=1.0,νxy=0.0, α=0.0, density=1.0, model=:EPT, custom=Float64[])
 
-        # Basic test2
+        # Basic tests
         Ex>0.0 || throw("Material:: Ex must be > 0")
         density>0.0 || throw("Material:: density must be > 0")
+        model in [:EPT,:EPD,:Custom] || throw("Material:: model must be :EPT or :EPD (for 2D analysis)")
 
         # create type
-        new(Ex,νxy,α,density)
+        new(Ex,νxy,α,density,model,custom)
 
     end
 
