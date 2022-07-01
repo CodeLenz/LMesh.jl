@@ -21,7 +21,7 @@
     # Create a 2D mesh
     m2D = Mesh2D(b2,mat,geo,ebc,forces)
 
-    @test all(Conect(m2D,1).==[1;2])
+    @test all(Connect(m2D,1).==[1;2])
     @test all(Coord(m2D,1).==[0.0;0.0])
     @test Length(m2D,1)==0.5
     @test all(DOFs(m2D,1).==[1;2;3;4])
