@@ -183,7 +183,7 @@ Material data for element ele
 
 """
 function Get_material(mesh::Mesh,ele::Int64)
-   mn = Get_material_number(ele)
+   mn = Get_material_number(mesh,ele)
    mesh.materials[mn]
 end
 
@@ -211,6 +211,6 @@ Geometry data for element ele
 
 """
 function Get_geometry(mesh::Mesh,ele::Int64)
-   gn = Get_geometry_number(ele)
+   gn = Get_geometry_number(mesh,ele)
    mesh.geometries[gn]
 end
