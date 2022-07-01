@@ -21,7 +21,7 @@ module LMesh
    # Exports
    export Material, Geometry
    export Mesh, Mesh2D, Mesh3D
-   export Base.iterator
+   export iterator
    export Conect,Coord,Length,DOFs,T_matrix
    export Free_DOFs, Nodal_coordinates, Centroid
    export Get_dim, Get_etype, Get_eclass
