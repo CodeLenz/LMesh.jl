@@ -214,3 +214,24 @@ function Get_geometry(mesh::Mesh,ele::Int64)
    gn = Get_geometry_number(mesh,ele)
    mesh.geometries[gn]
 end
+
+
+"""
+Number of elements in this mesh
+
+   Get_ne(mesh::Mesh)
+
+"""
+function Get_ne(mesh::Mesh)
+   mesh.bmesh.ne
+end
+
+"""
+Number of nodes in this mesh
+
+   Get_nn(mesh::Mesh)
+
+"""
+function Get_nn(mesh::Mesh)
+   mesh.bmesh.nn
+end
