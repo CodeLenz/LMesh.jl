@@ -25,6 +25,7 @@ module LMesh
    export Free_DOFs, Nodal_coordinates, Centroid
    export Get_dim, Get_etype, Get_eclass
    export Get_material, Get_geometry
+   export Get_material_number, Get_geometry_number
    export plot
 
 end # module LMesh
