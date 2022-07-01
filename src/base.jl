@@ -159,29 +159,58 @@ function Get_eclass(mesh::Mesh)
     return class
 end
 
+
 #
-# Return material for element ele
+# Return material number for element ele
 #
 """
-Material for element ele
+Material number for element ele
+
+   Get_material(mesh::Mesh,ele::Int64)
+
+"""
+function Get_material_number(mesh::Mesh,ele::Int64)
+   mesh.mat_ele[ele]
+end
+
+#
+# Return material data for element ele
+#
+"""
+Material data for element ele
 
    Get_material(mesh::Mesh,ele::Int64)
 
 """
 function Get_material(mesh::Mesh,ele::Int64)
-   mesh.mat_ele[ele]
+   mn = Get_material_number(ele)
+   mesh.materials[mn]
 end
 
 
 #
-# Return geometry for element ele
+# Return geometry number for element ele
 #
 """
-Geometry for element ele
+Geometry number for element ele
+
+   Get_geometry_number(mesh::Mesh,ele::Int64)
+
+"""
+function Get_geometry_number(mesh::Mesh,ele::Int64)
+   mesh.geo_ele[ele]
+end
+
+#
+# Return geometry data for element ele
+#
+"""
+Geometry data for element ele
 
    Get_geometry(mesh::Mesh,ele::Int64)
 
 """
 function Get_geometry(mesh::Mesh,ele::Int64)
-   mesh.geo_ele[ele]
+   gn = Get_geometry_number(ele)
+   mesh.geometries[gn]
 end
