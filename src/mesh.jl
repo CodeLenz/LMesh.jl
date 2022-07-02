@@ -16,12 +16,19 @@ Basic structure for 2D Meshes
 where
 
    bmesh      = Background mesh (2D)
+
    materials  = Vector with Materials definitions
+
    geometries = Vector with Geometries definitions
+
    ebc        = Matrix with essential boundary conditions
+
    nbc        = Matrix with natural boundary conditions
+
    mat_ele    = Vector linking each element to a given material
+
    geo_ele    = Vector linking each element to a given geometry
+
    options    = Dictionary with optional data
 """
 mutable struct Mesh2D <: Mesh
@@ -120,12 +127,19 @@ Basic structure for #D Meshes
 where
 
    bmesh      = Background mesh (3D)
+
    materials  = Vector with Materials definitions
+
    geometries = Vector with Geometries definitions
+
    ebc        = Matrix with essential boundary conditions
+
    nbc        = Matrix with natural boundary conditions
+
    mat_ele    = Vector linking each element to a given material
+
    geo_ele    = Vector linking each element to a given geometry
+
    options    = Dictionary with optional data
 """
 mutable struct Mesh3D <: Mesh
