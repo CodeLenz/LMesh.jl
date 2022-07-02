@@ -8,7 +8,6 @@ Basic structure to store geometrical data
 
 where all inputs are named.
 """
-
 struct Geometry
 
     # Cross section area
