@@ -156,7 +156,7 @@ Return 2 for 2D problems and 3 for 3D problems
    Get_dim(mesh::Mesh)
 
 """
-function Get_dim(mesh::Mesh)
+@inline function Get_dim(mesh::Mesh)
   
     ifelse(isa(mesh,Mesh2D),2,3)
   
@@ -171,7 +171,7 @@ Return element type
    Get_etype(mesh::Mesh)
 
 """
-function Get_etype(mesh::Mesh)
+@inline function Get_etype(mesh::Mesh)
   
     mesh.bmesh.etype
   
@@ -206,7 +206,7 @@ Material number for element ele
    Get_material(mesh::Mesh,ele::Int64)
 
 """
-function Get_material_number(mesh::Mesh,ele::Int64)
+@inline function Get_material_number(mesh::Mesh,ele::Int64)
    mesh.mat_ele[ele]
 end
 
@@ -234,7 +234,7 @@ Geometry number for element ele
    Get_geometry_number(mesh::Mesh,ele::Int64)
 
 """
-function Get_geometry_number(mesh::Mesh,ele::Int64)
+@inline function Get_geometry_number(mesh::Mesh,ele::Int64)
    mesh.geo_ele[ele]
 end
 
@@ -259,7 +259,7 @@ Number of elements in this mesh
    Get_ne(mesh::Mesh)
 
 """
-function Get_ne(mesh::Mesh)
+@inline function Get_ne(mesh::Mesh)
    mesh.bmesh.ne
 end
 
@@ -269,6 +269,6 @@ Number of nodes in this mesh
    Get_nn(mesh::Mesh)
 
 """
-function Get_nn(mesh::Mesh)
+@inline function Get_nn(mesh::Mesh)
    mesh.bmesh.nn
 end
