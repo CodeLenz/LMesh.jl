@@ -13,9 +13,9 @@ Basic structure for 2D Meshes
           mat_ele = Int64[], geo_ele = Int64[], 
           options=Dict{Symbol,Matrix{Float64}}())
 
-where
+where <br/>
 
-   bmesh      = Background mesh (2D)
+   bmesh      = Background mesh (2D) <br/>
 
    materials  = Vector with Materials definitions
 
