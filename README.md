@@ -1,7 +1,7 @@
 # LMesh
 Basic building block for other codes
 
-https://codelenz.github.io/LMesh/
+https://codelenz.github.io/LMesh.jl/
 
 Basic example - 2D
 ```julia
