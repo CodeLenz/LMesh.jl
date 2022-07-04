@@ -52,7 +52,7 @@ Return vectors x and y with the nodal coordinates of element ele
 
 where m is a 2D Mesh and ele a valid element.
 """
-function Nodal_coordinates(m::Mesh2D,ele)
+function Nodal_coordinates(m::Mesh2D,ele::Int64)
 
     # Alias
     bm = m.bmesh
@@ -87,7 +87,7 @@ Return vectors x, y and z with the nodal coordinates of element ele
 
 where m is a 3D Mesh and ele a valid element.
 """
-function Nodal_coordinates(m::Mesh3D,ele)
+function Nodal_coordinates(m::Mesh3D,ele::Int64)
 
     # Alias
     bm = m.bmesh
@@ -137,7 +137,7 @@ Return a vector with the centroidal coordinates of element ele
    Centroid(mesh::Mesh3D,ele::Int64)
    
 """
-function Centroid(mesh::Mesh3D,ele)
+function Centroid(mesh::Mesh3D,ele::Int64)
 
     # Coordinates
     x,y,z = Nodal_coordinates(mesh,ele)
@@ -156,11 +156,18 @@ Return 2 for 2D problems and 3 for 3D problems
    Get_dim(mesh::Mesh)
 
 """
-@inline function Get_dim(mesh::Mesh)
+@inline function Get_dim(mesh::Mesh2D)
   
-    ifelse(isa(mesh,Mesh2D),2,3)
+    return 2 #ifelse(isa(mesh,Mesh2D),2,3)
   
 end
+
+@inline function Get_dim(mesh::Mesh3D)
+  
+   return 3 #ifelse(isa(mesh,Mesh2D),2,3)
+ 
+end
+
 
 #
 # Element type
