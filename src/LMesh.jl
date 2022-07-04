@@ -6,9 +6,12 @@ module LMesh
    using Statistics:mean
    using Plots
 
+   if isdefined(Base, :Experimental) && isdefined(Base.Experimental, Symbol("@optlevel"))
+       @eval Base.Experimental.@optlevel 3
+   end
+
+
    # Local includes
-
-
    include("material.jl")
    include("geometry.jl")
    include("mesh.jl")
