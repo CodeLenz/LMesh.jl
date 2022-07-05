@@ -213,8 +213,8 @@ end
    
        m2 = Mesh2D(b2,materials,geometries,ebc,nbc)
        @test m2.nload == 2
-       @test m2.ngls[1]== 8 - 5
-       @test m2.ngls[2]== 8 - 4
+       @test m2.ngls[1]== 8 - 4
+       @test m2.ngls[2]== 8 - 3
 
 
        # Some invalid tests
@@ -404,7 +404,7 @@ end
               2 2 0.0 2;
               5 1 0.0 2; 
               7 3 0.0 2]
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
 
        # Invalid node   (0)
@@ -419,7 +419,7 @@ end
               2 2 0.0 2;
               5 1 0.0 2; 
               7 3 0.0 2]
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
        # Invalid node   (>nn)
        Xebc = [1 1 0.0 1; 
@@ -433,7 +433,7 @@ end
               2 2 0.0 2;
               5 1 0.0 2; 
               10 3 0.0 2]  #<-
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
 
        # Invalid dof   (-1)
@@ -448,7 +448,7 @@ end
            2 2 0.0 2;
            5 1 0.0 2; 
            7 3 0.0 2]
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
        # Invalid dof   (0)
        Xebc = [1 1 0.0 1; 
@@ -462,7 +462,7 @@ end
            2 2 0.0 2;
            5 1 0.0 2; 
            7 3 0.0 2]
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
        # Invalid dof   (4>3)
        Xebc = [1 1 0.0 1; 
@@ -476,7 +476,7 @@ end
            2 2 0.0 2;
            5 1 0.0 2; 
            7 3 0.0 2]
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
        # Invalid loadcase  (-1)
        Xebc = [1 1 0.0 1; 
@@ -485,49 +485,49 @@ end
            5 1 0.0 1; 
            7 3 0.0 1; 
            8 1 0.0 1;  
-           1 1 0.0 -1; <-
+           1 1 0.0 -1; #<-
            1 3 0.0 2;  
            2 2 0.0 2;
            5 1 0.0 2; 
            7 3 0.0 2]
-       Mesh3D(b3,materials,geometries,Xebc,nbc)
+       @test_throws String Mesh3D(b3,materials,geometries,Xebc,nbc)
 
        # NBC
 
        # Invalid node (-1)
        Xnbc = [1 2 -100.0 1;
        -1 2 +200.0 2 ]   #<-
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
        # Invalid node (0)
        Xnbc = [0 2 -100.0 1; #<-
        2 2 +200.0 2 ]   
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
        # Invalid node (>nn)
        Xnbc = [10 2 -100.0 1; #<-
        2 2 +200.0 2 ]   
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
        # Invalid dof (-1)
        Xnbc = [1 -1 -100.0 1; #<-
        2 2 +200.0 2 ]   
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
        # Invalid dof (0)
        Xnbc = [1 0 -100.0 1; #<-
        2 2 +200.0 2 ]   
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
        # Invalid dof (4)
        Xnbc = [1 4 -100.0 1; #<-
        2 2 +200.0 2 ]   
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
        # Invalid loadcase
        Xnbc = [1 3 -100.0 -1; #<-
        2 2 +200.0 2 ]   
-       Mesh3D(b3,materials,geometries,ebc,Xnbc)
+       @test_throws String Mesh3D(b3,materials,geometries,ebc,Xnbc)
 
 
    end
