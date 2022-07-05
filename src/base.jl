@@ -6,15 +6,16 @@
 Return a vector with all the free (not constrained) DOFs in the mesh. 
 This function is used to build Mesh.free_dofs
 
-   Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
+   Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
 
 where
 
    bmesh    = background mesh
    nebc     = number of essential boundary conditions
    ebc      = matrix with essential boundary condition data
+   loadcase = the load case to consider
 """
-function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
+function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
   
   # Dimensão da malha
   nnos = bmesh.nn
@@ -29,10 +30,14 @@ function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64})
   todos = collect(1:dim*nnos)
    
   # Olha quem está sendo preso e coloca um -1 no lugar
+  # Verifica loadcase
   @inbounds for i=1:nebc
-       no = Int(ebc[i,1])
-       gl = Int(ebc[i,2])
-       todos[dim*(no-1)+gl] = -1
+       no   = Int(ebc[i,1])
+       gl   = Int(ebc[i,2])
+       load = Int(ebc[i,4])
+       if load==loadcase
+          todos[dim*(no-1)+gl] = -1
+       end
   end     
    
   # Pega todos os valores que são maiores do que zero
