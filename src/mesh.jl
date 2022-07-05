@@ -44,19 +44,22 @@ mutable struct Mesh2D <: Mesh
    ngeom::Int64
    geometries::Vector{Geometry}
 
+   # Number of load cases
+   nload::Int64
+
    # Supports (essential boundary conditions)
-   # node gl value
+   # node gl value loadcase
    nebc::Int64
    ebc::Matrix{Float64}
 
    # Point Loads (natural boundary conditions)
-   # node gl value
+   # node gl value loadcase 
    nnbc::Int64
    nbc::Matrix{Float64}
 
    # Free dofs
-   ngls::Int64
-   free_dofs::Vector{Int64}
+   ngls::Vector{Int64}
+   free_dofs::Vector{Vector{Int64}}
 
    # Map element to material
    mat_ele::Vector{Int64}
@@ -71,7 +74,8 @@ mutable struct Mesh2D <: Mesh
    function Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
                    geometries::Vector{Geometry},ebc::Matrix{Float64},
                    nbc::Matrix{Float64} ;
-                   mat_ele = Int64[], geo_ele = Int64[],  options=Dict{Symbol,Matrix{Float64}}())
+                   mat_ele = Int64[], geo_ele = Int64[], 
+                   options=Dict{Symbol,Matrix{Float64}}())
     
             # Dimensions
             nmat = length(materials)
@@ -105,18 +109,54 @@ mutable struct Mesh2D <: Mesh
                maximum(geo_ele)<=ngeo || throw("Mesh2D::geo_ele should point to a valid geometry (<$ngeo)")
             end
       
-      
+            # Compatibility with older versions
+            # ebc and nbc have 3 collumns (node,dof,value)
+            # if it is the case, add a fourth column with ones - loadcases
+            if size(ebc,2)==3 
+               ebc = [ebc ones(nebc)]
+            end
+            if size(nbc,2)==3 
+               nbc = [nbc ones(nnbc)]
+            end
+           
+            # Some basic assertions to ebc
+            for i=1:nebc
+               0<ebc[i,1]<= bmesh.nn || throw("Mesh2D:: ebc line $i :: incorrect node ")
+               0<ebc[i,2]<= 2        || throw("Mesh2D:: ebc line $i :: incorrect dof ")
+               0<=ebc[i,4]           || throw("Mesh2D:: ebc line $i :: incorrect load case ")
+            end   
+
+            # Some basic assertions to nbc
+            for i=1:nnbc
+               0<nbc[i,1]<= bmesh.nn || throw("Mesh2D:: nbc line $i :: incorrect node ")
+               0<nbc[i,2]<= 2        || throw("Mesh2D:: nbc line $i :: incorrect dof ")
+               0<=nbc[i,4]           || throw("Mesh2D:: nbc line $i :: incorrect load case ")
+            end   
+
+            # Find the maximum loadcase
+            max_load_ebc = maximum(ebc[:,4]) 
+            max_load_nbc = maximum(nbc[:,4])
+            nload = Int(max(max_load_ebc,max_load_nbc))
+
+            # Now both ngl and free_dofs will be
+            ngls = Int64[]
+            free_dofs = Vector{Int64}[]
+
             # Free dofs and effective number of gls
-            free_dofs, ngls = Free_DOFs(bmesh,nebc,ebc)
+            for load=1:nload
+               freedo, ngl = Free_DOFs(bmesh,nebc,ebc,load)
+               push!(ngls,ngl)
+               push!(free_dofs,freedo)
+            end 
 
             # Create the type
-            new(bmesh,nmat,materials,ngeo,geometries,nebc,ebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
+            new(bmesh,nmat,materials,ngeo,geometries,nload,nebc,ebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
    end
 end
 
 
 """
-Basic structure for #D Meshes
+Basic structure for 3D Meshes
 
    Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
           geometries::Vector{Geometry},ebc::Matrix{Float64},
@@ -155,19 +195,22 @@ mutable struct Mesh3D <: Mesh
    ngeom::Int64
    geometries::Vector{Geometry}
 
+   # Number of load cases
+   nload::Int64
+
    # Supports (essential boundary conditions)
-   # node gl value
+   # node gl value loadcase
    nebc::Int64
    ebc::Matrix{Float64}
 
    # Point Loads (natural boundary conditions)
-   # node gl value
+   # node gl value loadcase
    nnbc::Int64
    nbc::Matrix{Float64}
 
    # Free dofs
-   ngls::Int64
-   free_dofs::Vector{Int64}
+   ngls::Vector{Int64}
+   free_dofs::Vector{Vector{Int64}}
 
    # Map element to material
    mat_ele::Vector{Int64}
@@ -216,12 +259,48 @@ mutable struct Mesh3D <: Mesh
           maximum(geo_ele)<=ngeo || throw("Mesh2D::geo_ele should point to a valid geometry (<$ngeo)")
        end
 
+      # Compatibility with older versions
+      # ebc and nbc have 3 collumns (node,dof,value)
+      # if it is the case, add a fourth column with ones - loadcases
+      if size(ebc,2)==3 
+          ebc = [ebc ones(nebc)]
+      end
+      if size(nbc,2)==3 
+          nbc = [nbc ones(nnbc)]
+      end
       
+      # Some basic assertions to ebc
+      for i=1:nebc
+         0<ebc[i,1]<= bmesh.nn || throw("Mesh3D:: ebc line $i :: incorrect node ")
+         0<ebc[i,2]<= 3        || throw("Mesh3D:: ebc line $i :: incorrect dof ")
+         0<=ebc[i,4]           || throw("Mesh3D:: ebc line $i :: incorrect load case ")
+      end   
+
+      # Some basic assertions to nbc
+      for i=1:nnbc
+         0<nbc[i,1]<= bmesh.nn || throw("Mesh3D:: nbc line $i :: incorrect node ")
+         0<nbc[i,2]<= 3        || throw("Mesh3D:: nbc line $i :: incorrect dof ")
+         0<=nbc[i,4]           || throw("Mesh3D:: nbc line $i :: incorrect load case ")
+      end   
+
+      # Find the maximum loadcase
+      max_load_ebc = maximum(ebc[:,4]) 
+      max_load_nbc = maximum(nbc[:,4])
+      nload = Int(max(max_load_ebc,max_load_nbc))
+
+      # Now both ngl and free_dofs will be
+      ngls = Int64[]
+      free_dofs = Vector{Int64}[]
+
       # Free dofs and effective number of gls
-      free_dofs, ngls = Free_DOFs(bmesh,nebc,ebc)
+      for load=1:nload
+          freedo, ngl = Free_DOFs(bmesh,nebc,ebc,load)
+          push!(ngls,ngl)
+          push!(free_dofs,freedo)
+      end 
 
       # Create the type
-      new(bmesh,nmat,materials,ngeo,geometries,nebc,ebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
+      new(bmesh,nmat,materials,ngeo,geometries,nload,nebc,ebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
    end
 
 end
