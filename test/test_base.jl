@@ -30,7 +30,7 @@
  
     
     # Free_DOFs 
-    gls, ngls =  Free_DOFs(b2,nebc,ebc)
+    gls, ngls =  Free_DOFs(b2,nebc,ebc,1)
 
     # Reference values
     # 1 2 3 4 5 6 7 8
@@ -43,7 +43,7 @@
     @test all(gls.==refer)
  
     # Check inferred
-    @isinferred Free_DOFs(b2,nebc,ebc)
+    @isinferred Free_DOFs(b2,nebc,ebc,1)
 
 
     ####################   3D BMesh ######################
