@@ -29,6 +29,12 @@ function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64
   # Gerar um vetor de 1 até dim*nnos
   todos = collect(1:dim*nnos)
    
+  # Just to avoid problems with legacy ebc code
+  # Add loadcase information
+  if size(ebc,2)==3
+     ebc = [ebc ones(size(ebc,1))]
+  end
+
   # Olha quem está sendo preso e coloca um -1 no lugar
   # Verifica loadcase
   @inbounds for i=1:nebc
