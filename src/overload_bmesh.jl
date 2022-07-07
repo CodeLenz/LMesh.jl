@@ -63,6 +63,53 @@ function DOFs(mesh::Mesh,ele::Int64)
 
 end
 
+
+import BMesh.Nodal_coordinates
+"""
+Return vectors x and y with the nodal coordinates of element ele
+
+   Nodal_coordinates(mesh::Mesh2D,ele::Int64)
+
+where mesh is a 2D Mesh and ele a valid element.
+"""
+function Nodal_coordinates(mesh::Mesh2D,ele::Int64)
+    BMesh.Nodal_coordinates(mesh.bmesh,ele)
+end
+
+"""
+Return vectors x, y and z with the nodal coordinates of element ele
+
+   Nodal_coordinates(mesh::Mesh3D,ele::Int64)
+
+where mesh is a 3D Mesh and ele a valid element.
+"""
+function Nodal_coordinates(mesh::Mesh3D,ele::Int64)
+    BMesh.Nodal_coordinates(mesh.bmesh,ele)
+end
+
+
+import BMesh:Centroid
+"""
+Return a vector with the centroidal coordinates of element ele
+
+   Centroid(mesh::Mesh2D,ele::Int64)
+
+"""
+function Centroid(mesh::Mesh2D,ele::Int64)
+    Centroid(mesh.bmesh,ele)
+end
+
+"""
+Return a vector with the centroidal coordinates of element ele
+
+   Centroid(mesh::Mesh3D,ele::Int64)
+
+"""
+function Centroid(mesh::Mesh3D,ele::Int64)
+    Centroid(mesh.bmesh,ele)
+end
+
+
 import BMesh:T_matrix
 """
 (Overloaded from BMesh)
@@ -76,5 +123,32 @@ function T_matrix(mesh::Mesh, ele::Int64, α=0.0)
     
     BMesh.T_matrix(mesh.bmesh,ele,α)
     
+end
+
+
+"""
+(Overloaded from BMesh)
+Find the closest node to a given coordinate (x,y)
+
+    Find_node(mesh::Mesh2D,x,y;atol=1E-5)
+
+
+"""
+import BMesh.Find_node
+function Find_node(mesh::Mesh,x::Float64,y::Float64;atol=1E-5)
+   BMesh.Find_node(mesh.bmesh,x,y,atol=atol)
+end
+
+
+"""
+(Overloaded from BMesh)
+Find the closest node to a given coordinate (x,y,z)
+
+    Find_node(mesh::Mesh3D,x,y,z;atol=1E-5)
+
+
+"""
+function Find_node(mesh::Mesh3D,x::Float64,y::Float64,z::Float64;atol=1E-5)
+   BMesh.Find_node(mesh.bmesh,x,y,z,atol=atol)
 end
 

@@ -53,110 +53,6 @@ function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64
      
 end
 
-#
-# Find the coordinates x and y of a given element
-#
-"""
-Return vectors x and y with the nodal coordinates of element ele
-
-   Nodal_coordinates(m::Mesh2D,ele)
-
-where m is a 2D Mesh and ele a valid element.
-"""
-function Nodal_coordinates(m::Mesh2D,ele::Int64)
-
-    # Alias
-    bm = m.bmesh
-
-    # Nodes
-    nodes = Connect(bm,ele)
-
-    # Number of nodes
-    nn = length(nodes)
-
-    # Coordinates 
-    x = Vector{Float64}(undef,nn)
-    y = Vector{Float64}(undef,nn)
-    @inbounds for i=1:nn
-
-        # Local coordinates
-        x[i],y[i] = Coord(bm,nodes[i])
-
-    end
-
-   return x, y
-end
-
-
-#
-# Find the coordinates x and y of a given element
-#
-"""
-Return vectors x, y and z with the nodal coordinates of element ele
-
-   Nodal_coordinates(m::Mesh3D,ele)
-
-where m is a 3D Mesh and ele a valid element.
-"""
-function Nodal_coordinates(m::Mesh3D,ele::Int64)
-
-    # Alias
-    bm = m.bmesh
-
-    # Nodes
-    nodes = Connect(bm,ele)
-
-    # Number of nodes
-    nn = length(nodes)
-
-    # Coordinates 
-    x = Vector{Float64}(undef,nn)
-    y = Vector{Float64}(undef,nn)
-    z = Vector{Float64}(undef,nn)
-    
-    @inbounds for i=1:nn
-
-        # Local coordinates
-        x[i],y[i],z[i] = Coord(bm,nodes[i])
-
-    end
-
-   return x, y, z
-end
-
-# Centroid for a given element
-"""
-Return a vector with the centroidal coordinates of element ele
-
-   Centroid(mesh::Mesh2D,ele::Int64)
-
-"""
-function Centroid(mesh::Mesh2D,ele::Int64)
-
-    # Coordinates
-    x,y = Nodal_coordinates(mesh,ele)
-
-    # Return mean values
-    [mean(x); mean(y)]
-
-end
-
-# Centroid for a given element
-"""
-Return a vector with the centroidal coordinates of element ele
-
-   Centroid(mesh::Mesh3D,ele::Int64)
-   
-"""
-function Centroid(mesh::Mesh3D,ele::Int64)
-
-    # Coordinates
-    x,y,z = Nodal_coordinates(mesh,ele)
-
-    # Return mean values
-    [mean(x); mean(y); mean(z)]
-
-end
 
 #
 # Dimensionality 
@@ -290,3 +186,4 @@ Number of nodes in this mesh
 @inline function Get_nn(mesh::Mesh)
    mesh.bmesh.nn
 end
+
