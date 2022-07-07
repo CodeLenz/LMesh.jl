@@ -155,3 +155,38 @@ function Find_node(mesh::Mesh3D,x::Float64,y::Float64,z::Float64;atol=1E-5)
    BMesh.Find_node(mesh.bmesh,x,y,z,atol=atol)
 end
 
+
+
+import BMesh.Find_nodes_in_rectangle
+"""
+(Overloaded from BMesh)
+Find the nodes inside a given rectangle
+
+    Find_nodes_in_rectangle(mesh::Mesh2D,x1,y1,x2,y2;atol=1E-5)
+
+    __________________(x2,y2)  
+   |                     |
+   |                     |
+   (x1,y1)_______________| 
+
+
+"""
+function Find_nodes_in_rectangle(mesh::Mesh2D,x1,y1,x2,y2; atol=1E-5)
+    BMesh.Find_nodes_in_rectangle(mesh.bmesh,x1,y1,x2,y2, atol=atol)
+end
+
+
+import BMesh.Find_nodes_in_box
+"""
+(Overloaded from BMesh)
+Find the nodes inside a given 3D box
+
+    Find_nodes_in_box(mesh::Mesh3D,x1,y1,z1,x2,y2,z2;atol=1E-5)
+
+
+"""
+function Find_nodes_in_box(mesh::Mesh3D,x1,y1,z1,x2,y2,z2;atol=1E-5)
+    BMesh.Find_nodes_in_box(mesh.bmesh,x1,y1,z1,x2,y2,z2;atol=atol)
+end
+
+

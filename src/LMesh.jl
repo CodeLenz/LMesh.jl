@@ -27,6 +27,7 @@ module LMesh
    export iterator
    export Conect,Coord,Length,DOFs,T_matrix
    export Free_DOFs, Nodal_coordinates, Centroid
+   export Find_node, Find_nodes_in_rectangle, Find_nodes_in_box
    export Get_dim, Get_etype, Get_eclass
    export Get_material, Get_geometry
    export Get_material_number, Get_geometry_number
