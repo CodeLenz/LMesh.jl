@@ -66,6 +66,7 @@ end
 
 import BMesh.Nodal_coordinates
 """
+(Overloaded from BMesh)
 Return vectors x and y with the nodal coordinates of element ele
 
    Nodal_coordinates(mesh::Mesh2D,ele::Int64)
@@ -77,6 +78,7 @@ function Nodal_coordinates(mesh::Mesh2D,ele::Int64)
 end
 
 """
+(Overloaded from BMesh)
 Return vectors x, y and z with the nodal coordinates of element ele
 
    Nodal_coordinates(mesh::Mesh3D,ele::Int64)
@@ -90,6 +92,7 @@ end
 
 import BMesh:Centroid
 """
+(Overloaded from BMesh)
 Return a vector with the centroidal coordinates of element ele
 
    Centroid(mesh::Mesh2D,ele::Int64)
@@ -126,6 +129,7 @@ function T_matrix(mesh::Mesh, ele::Int64, α=0.0)
 end
 
 
+import BMesh:Find_node
 """
 (Overloaded from BMesh)
 Find the closest node to a given coordinate (x,y)
@@ -134,7 +138,6 @@ Find the closest node to a given coordinate (x,y)
 
 
 """
-import BMesh.Find_node
 function Find_node(mesh::Mesh,x::Float64,y::Float64;atol=1E-5)
    BMesh.Find_node(mesh.bmesh,x,y,atol=atol)
 end
