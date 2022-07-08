@@ -22,13 +22,6 @@
     # Limit stress
     @test isa(Material(Ex=100.0,limit_stress=1E6),Material)
 
-    # Proportional Damping
-    # Limit stress
-    @test isa(Material(Ex=100.0,limit_stress=1E6,α_c=1E-6),Material)
-    @test isa(Material(Ex=100.0,limit_stress=1E6,β_c=1E-6),Material)
-    @test isa(Material(Ex=100.0,limit_stress=1E6,β_c=1E-6,α_c=1E-6),Material)
-    
-
     # Should Trhow
     @test_throws String Material(Ex=-1.0)
     @test_throws String Material(Ex=0.0)
