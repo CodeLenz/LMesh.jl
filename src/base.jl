@@ -6,7 +6,7 @@
 Return a vector with all the free (not constrained) DOFs in the mesh. 
 This function is used to build Mesh.free_dofs
 
-   Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+   Free_DOFs(bmesh::Bmesh2D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
 
 where
 
@@ -15,16 +15,63 @@ where
    ebc      = matrix with essential boundary condition data
    loadcase = the load case to consider
 """
-function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+function Free_DOFs(bmesh::Bmesh2D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
   
   # Dimensão da malha
   nnos = bmesh.nn
 
   # Se for 2D ou 3D mudamos o número de gls por nó
   dim = 2
-  if isa(bmesh,Bmesh3D)
-    dim=3
+  
+  # Gerar um vetor de 1 até dim*nnos
+  todos = collect(1:dim*nnos)
+   
+  # Just to avoid problems with legacy ebc code
+  # Add loadcase information
+  if size(ebc,2)==3
+     ebc = [ebc ones(size(ebc,1))]
   end
+
+  # Olha quem está sendo preso e coloca um -1 no lugar
+  # Verifica loadcase
+  @inbounds for i=1:nebc
+       no   = Int(ebc[i,1])
+       gl   = Int(ebc[i,2])
+       load = Int(ebc[i,4])
+       if load==loadcase
+          todos[dim*(no-1)+gl] = -1
+       end
+  end     
+   
+  # Pega todos os valores que são maiores do que zero
+  livres = todos[todos.>0]
+
+  return livres, length(livres)
+     
+end
+
+
+
+"""
+Return a vector with all the free (not constrained) DOFs in the mesh. 
+This function is used to build Mesh.free_dofs
+
+   Free_DOFs(bmesh::Bmesh3D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+
+where
+
+   bmesh    = background mesh
+   nebc     = number of essential boundary conditions
+   ebc      = matrix with essential boundary condition data
+   loadcase = the load case to consider
+"""
+function Free_DOFs(bmesh::Bmesh3D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+  
+  # Dimensão da malha
+  nnos = bmesh.nn
+
+  # Dimension
+  dim = 3
 
   # Gerar um vetor de 1 até dim*nnos
   todos = collect(1:dim*nnos)
@@ -52,6 +99,7 @@ function Free_DOFs(bmesh::Bmesh,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64
   return livres, length(livres)
      
 end
+
 
 
 #
@@ -102,12 +150,9 @@ Return truss or solid
 """
 function Get_eclass(mesh::Mesh)
   
-    class = :truss
     etype = Get_etype(mesh)
-    if etype==:solid2D || etype==:solid3D
-       class = :solid
-    end
-    return class
+    ifelse(etype==:solid2D || etype==:solid3D, :solid,  :truss)
+   
 end
 
 
