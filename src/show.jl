@@ -49,13 +49,13 @@ function plot(mesh::Mesh2D; name="", factor=6.0)
     end #ele
    
     # Show Essential boundary conditions
-    for i=1:mesh.nebc
+    for i=1:mesh.nhebc
 
         # node
-        no = Int(mesh.ebc[i,1])
+        no = mesh.hebc[i,1]
 
         # DOF
-        dof = Int(mesh.ebc[i,2])
+        dof = mesh.hebc[i,2]
 
         # Origin (node coordinates)
         coord = Coord(mesh.bmesh,no)
@@ -169,13 +169,13 @@ function plot(mesh::Mesh3D; name="", factor=6.0)
     end #ele
 
     # Show Essential boundary conditions
-    for i=1:mesh.nebc
+    for i=1:mesh.nhebc
 
         # node
-        no = Int(mesh.ebc[i,1])
+        no = mesh.hebc[i,1]
 
         # DOF
-        dof = Int(mesh.ebc[i,2])
+        dof = mesh.hebc[i,2]
 
         # Origin (node coordinates)
         coord = Coord(mesh.bmesh,no)
