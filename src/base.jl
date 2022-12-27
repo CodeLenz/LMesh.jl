@@ -6,16 +6,16 @@
 Return a vector with all the free (not constrained) DOFs in the mesh. 
 This function is used to build Mesh.free_dofs
 
-   Free_DOFs(bmesh::Bmesh2D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+   Free_DOFs(bmesh::Bmesh2D,nhebc::Int64,hebc::Matrix{Int64},loadcase::Int64)
 
 where
 
    bmesh    = background mesh
-   nebc     = number of essential boundary conditions
-   ebc      = matrix with essential boundary condition data
+   nhebc     = number of essential boundary conditions
+   hebc      = matrix with essential boundary condition data
    loadcase = the load case to consider
 """
-function Free_DOFs(bmesh::Bmesh2D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+function Free_DOFs(bmesh::Bmesh2D,nhebc::Int64,hebc::Matrix{Int64},loadcase::Int64)
   
   # Dimensão da malha
   nnos = bmesh.nn
@@ -26,21 +26,13 @@ function Free_DOFs(bmesh::Bmesh2D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int
   # Gerar um vetor de 1 até dim*nnos
   todos = collect(1:dim*nnos)
    
-  # Just to avoid problems with legacy ebc code
-  # Add loadcase information
-  if size(ebc,2)==3
-     ebc = [ebc ones(size(ebc,1))]
-  end
 
   # Olha quem está sendo preso e coloca um -1 no lugar
   # Verifica loadcase
-  @inbounds for i=1:nebc
-       no   = Int(ebc[i,1])
-       gl   = Int(ebc[i,2])
-       load = Int(ebc[i,4])
-       if load==loadcase
-          todos[dim*(no-1)+gl] = -1
-       end
+  @inbounds for i=1:nhebc
+       no   = hebc[i,1]
+       gl   = hebc[i,2]
+       todos[dim*(no-1)+gl] = -1
   end     
    
   # Pega todos os valores que são maiores do que zero
@@ -56,16 +48,16 @@ end
 Return a vector with all the free (not constrained) DOFs in the mesh. 
 This function is used to build Mesh.free_dofs
 
-   Free_DOFs(bmesh::Bmesh3D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+   Free_DOFs(bmesh::Bmesh3D,nhebc::Int64,hebc::Matrix{Int64},loadcase::Int64)
 
 where
 
    bmesh    = background mesh
-   nebc     = number of essential boundary conditions
-   ebc      = matrix with essential boundary condition data
+   nhebc     = number of homogeneous essential boundary conditions
+   hebc      = matrix with homogeneous essential boundary condition data
    loadcase = the load case to consider
 """
-function Free_DOFs(bmesh::Bmesh3D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int64)
+function Free_DOFs(bmesh::Bmesh3D,nhebc::Int64,hebc::Matrix{Int64},loadcase::Int64)
   
   # Dimensão da malha
   nnos = bmesh.nn
@@ -76,21 +68,12 @@ function Free_DOFs(bmesh::Bmesh3D,nebc::Int64,ebc::Matrix{Float64},loadcase::Int
   # Gerar um vetor de 1 até dim*nnos
   todos = collect(1:dim*nnos)
    
-  # Just to avoid problems with legacy ebc code
-  # Add loadcase information
-  if size(ebc,2)==3
-     ebc = [ebc ones(size(ebc,1))]
-  end
-
   # Olha quem está sendo preso e coloca um -1 no lugar
   # Verifica loadcase
-  @inbounds for i=1:nebc
-       no   = Int(ebc[i,1])
-       gl   = Int(ebc[i,2])
-       load = Int(ebc[i,4])
-       if load==loadcase
-          todos[dim*(no-1)+gl] = -1
-       end
+  @inbounds for i=1:nhebc
+       no   = hebc[i,1]
+       gl   = hebc[i,2]
+       todos[dim*(no-1)+gl] = -1
   end     
    
   # Pega todos os valores que são maiores do que zero
