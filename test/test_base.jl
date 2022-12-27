@@ -22,15 +22,15 @@
     b2 = Bmesh2D(etype,nn,ne,coord,connect,Lx,Ly,nx,ny)
 
     # Essential boundary conditions
-    nebc = 4
-    ebc = [1 1 0.0 ; 
-           2 2 0.0 ; 
-           3 2 0.0 ; 
-           4 1 0.0]
+    nhebc = 4
+    hebc = [1 1 ; 
+            2 2  ; 
+            3 2  ; 
+            4 1 ]
  
     
     # Free_DOFs 
-    gls, ngls =  Free_DOFs(b2,nebc,ebc,1)
+    gls, ngls =  Free_DOFs(b2,nhebc,hebc,1)
 
     # Reference values
     # 1 2 3 4 5 6 7 8
@@ -43,7 +43,7 @@
     @test all(gls.==refer)
  
     # Check inferred
-    @isinferred Free_DOFs(b2,nebc,ebc,1)
+    @isinferred Free_DOFs(b2,nhebc,hebc,1)
 
 
     ####################   3D BMesh ######################
@@ -76,16 +76,16 @@
     b3 = Bmesh3D(etype,nn,ne,coord,connect,Lx,Ly,Lz,nx,ny,nz)
 
     # Essential boundary conditions
-    nebc = 6
-    ebc = [1 1 0.0 ; 
-           1 3 0.0 ;  
-           2 2 0.0 ;
-           5 1 0.0 ; 
-           7 3 0.0 ; 
-           8 1 0.0 ]
+    nhebc = 6
+    hebc = [1 1 ; 
+            1 3  ;  
+            2 2  ;
+            5 1  ; 
+            7 3  ; 
+            8 1  ]
 
     # Free_DOFs 
-    gls, ngls =  Free_DOFs(b3,nebc,ebc,1)
+    gls, ngls =  Free_DOFs(b3,nhebc,hebc,1)
 
     # Reference values
     # 1 2 3   4 5 6   7 8 9   10 11 12   13 14 15   16 17 18  19 20 21  22 23 24
@@ -97,7 +97,7 @@
     @test all(gls.==refer)
 
     # Check inferred
-    @isinferred Free_DOFs(b3,nebc,ebc,1)
+    @isinferred Free_DOFs(b3,nhebc,hebc,1)
 
     #
     # Nodal coordinates
@@ -124,9 +124,9 @@
     b2 = Bmesh2D(etype,nn,ne,coord,connect,Lx,Ly,nx,ny)
 
     # Essential boundary conditions
-    ebc = [1 1 0.0 ; 
-           1 2 0.0 ; 
-           2 2 0.0 ]
+    hebc = [1 1 ; 
+            1 2 ; 
+            2 2  ]
 
     # Natural boundary conditions
     nbc = [2 1 100.0]
@@ -136,7 +136,7 @@
     geometries = [Geometry(A=1.0)]
            
     # Mesh
-    m2 = Mesh2D(b2,materials,geometries,ebc,nbc)
+    m2 = Mesh2D(b2,materials,geometries,hebc,nbc)
 
     # Nodal coordinates of element 1 
     x,y=Nodal_coordinates(m2,1)
@@ -180,9 +180,9 @@
     b2 = Bmesh2D(etype,nn,ne,coord,connect,Lx,Ly,nx,ny)
 
     # Essential boundary conditions
-    ebc = [1 1 0.0 ; 
-           1 2 0.0 ; 
-           2 1 0.0 ]
+    hebc = [1 1 ; 
+           1 2  ; 
+           2 1  ]
 
     # Natural boundary conditions
     nbc = [3 1 100.0]
@@ -192,7 +192,7 @@
     geometries = [Geometry(thickness=1.0)]
            
     # Mesh
-    m2 = Mesh2D(b2,materials,geometries,ebc,nbc)
+    m2 = Mesh2D(b2,materials,geometries,hebc,nbc)
 
     # Check output
     @test Get_dim(m2)==2

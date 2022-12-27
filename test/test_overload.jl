@@ -13,13 +13,13 @@
     geo = [Geometry(A=1E-4)]
 
     # Essential boundary conditions (Supports)
-    ebc = [1 1 0.0 ; 1 2 0.0; 2 1 0.0; 2 2 0.0]
+    hebc = [1 1; 1 2; 2 1; 2 2]
 
     # Point loads
     forces = [4 2 100.0 ; 4 1 -100.0]
 
     # Create a 2D mesh
-    m2D = Mesh2D(b2,mat,geo,ebc,forces)
+    m2D = Mesh2D(b2,mat,geo,hebc,forces)
 
     # Check values
     @test all(Connect(m2D,1).==[1;2])
