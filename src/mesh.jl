@@ -72,7 +72,7 @@ mutable struct Mesh2D <: Mesh
 
    # Default constructor
    function Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
-                   geometries::Vector{Geometry},hebc::Matrix{Float64},
+                   geometries::Vector{Geometry},hebc::Matrix{Int64},
                    nbc::Matrix{Float64} ;
                    mat_ele = Int64[], geo_ele = Int64[], 
                    options=Dict{Symbol,Matrix{Float64}}())
@@ -117,7 +117,7 @@ mutable struct Mesh2D <: Mesh
             end
            
             # Some basic assertions to hebc
-            for i=1:nebc
+            for i=1:nhebc
                0<hebc[i,1]<= bmesh.nn || throw("Mesh2D:: ebc line $i :: incorrect node ")
                0<hebc[i,2]<= 2        || throw("Mesh2D:: ebc line $i :: incorrect dof ")
             end   
@@ -139,7 +139,7 @@ mutable struct Mesh2D <: Mesh
 
             # Free dofs and effective number of gls
             for load=1:nload
-               freedo, ngl = Free_DOFs(bmesh,nebc,ebc,load)
+               freedo, ngl = Free_DOFs(bmesh,nhebc,hebc,load)
                push!(ngls,ngl)
                push!(free_dofs,freedo)
             end 
@@ -262,7 +262,7 @@ mutable struct Mesh3D <: Mesh
       end
       
       # Some basic assertions to ebc
-      for i=1:nebc
+      for i=1:nhebc
          0<hebc[i,1]<= bmesh.nn || throw("Mesh3D:: hebc line $i :: incorrect node ")
          0<hebc[i,2]<= 3        || throw("Mesh3D:: hebc line $i :: incorrect dof ")
       end   
@@ -284,7 +284,7 @@ mutable struct Mesh3D <: Mesh
 
       # Free dofs and effective number of gls
       for load=1:nload
-          freedo, ngl = Free_DOFs(bmesh,nebc,ebc,load)
+          freedo, ngl = Free_DOFs(bmesh,nhebc,hebc,load)
           push!(ngls,ngl)
           push!(free_dofs,freedo)
       end 
