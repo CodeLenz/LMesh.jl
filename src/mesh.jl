@@ -8,7 +8,7 @@ abstract type Mesh end
 Basic structure for 2D Meshes
 
    Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
-          geometries::Vector{Geometry},ebc::Matrix{Float64},
+          geometries::Vector{Geometry},hebc::Matrix{Int64},
           nbc::Matrix{Float64} ;
           mat_ele = Int64[], geo_ele = Int64[], 
           options=Dict{Symbol,Matrix{Float64}}())
@@ -21,7 +21,7 @@ where <br/>
 
    geometries = Vector with Geometries definitions
 
-   ebc        = Matrix with essential boundary conditions
+   hebc        = Matrix with homogeneous essential boundary conditions
 
    nbc        = Matrix with natural boundary conditions
 
@@ -49,8 +49,8 @@ mutable struct Mesh2D <: Mesh
 
    # Supports (essential boundary conditions)
    # node gl value loadcase
-   nebc::Int64
-   ebc::Matrix{Float64}
+   nhebc::Int64
+   ebc::Matrix{Int64}
 
    # Point Loads (natural boundary conditions)
    # node gl value loadcase 
@@ -72,21 +72,21 @@ mutable struct Mesh2D <: Mesh
 
    # Default constructor
    function Mesh2D(bmesh::Bmesh2D,materials::Vector{Material},
-                   geometries::Vector{Geometry},ebc::Matrix{Float64},
+                   geometries::Vector{Geometry},hebc::Matrix{Float64},
                    nbc::Matrix{Float64} ;
                    mat_ele = Int64[], geo_ele = Int64[], 
                    options=Dict{Symbol,Matrix{Float64}}())
     
             # Dimensions
-            nmat = length(materials)
-            ngeo = length(geometries)
-            nebc = size(ebc,1)
-            nnbc = size(nbc,1)
+            nmat  = length(materials)
+            ngeo  = length(geometries)
+            nhebc = size(hebc,1)
+            nnbc  = size(nbc,1)
     
             # Basic tests
-            nmat>=1 || throw("Mesh2D::number of material properties must be >=1")
-            ngeo>=1 || throw("Mesh2D::number of geometries properties must be >=1")
-            nebc>=3 || throw("Mesh2D:: at least three essential boundary conditions are needed in 2D ")
+            nmat>=1  || throw("Mesh2D::number of material properties must be >=1")
+            ngeo>=1  || throw("Mesh2D::number of geometries properties must be >=1")
+            nhebc>=3 || throw("Mesh2D:: at least three homogeneous essential boundary conditions are needed in 2D ")
 
             
             # Process mat_ele 
@@ -110,20 +110,16 @@ mutable struct Mesh2D <: Mesh
             end
       
             # Compatibility with older versions
-            # ebc and nbc have 3 collumns (node,dof,value)
+            # nbc has 3 collumns (node,dof,value)
             # if it is the case, add a fourth column with ones - loadcases
-            if size(ebc,2)==3 
-               ebc = [ebc ones(nebc)]
-            end
             if size(nbc,2)==3 
                nbc = [nbc ones(nnbc)]
             end
            
-            # Some basic assertions to ebc
+            # Some basic assertions to hebc
             for i=1:nebc
-               0<ebc[i,1]<= bmesh.nn || throw("Mesh2D:: ebc line $i :: incorrect node ")
-               0<ebc[i,2]<= 2        || throw("Mesh2D:: ebc line $i :: incorrect dof ")
-               0<=ebc[i,4]           || throw("Mesh2D:: ebc line $i :: incorrect load case ")
+               0<hebc[i,1]<= bmesh.nn || throw("Mesh2D:: ebc line $i :: incorrect node ")
+               0<hebc[i,2]<= 2        || throw("Mesh2D:: ebc line $i :: incorrect dof ")
             end   
 
             # Some basic assertions to nbc
@@ -134,9 +130,8 @@ mutable struct Mesh2D <: Mesh
             end   
 
             # Find the maximum loadcase
-            max_load_ebc = maximum(ebc[:,4]) 
             max_load_nbc = maximum(nbc[:,4])
-            nload = Int(max(max_load_ebc,max_load_nbc))
+            nload = Int(max_load_nbc)
 
             # Now both ngl and free_dofs will be
             ngls = Int64[]
@@ -150,7 +145,7 @@ mutable struct Mesh2D <: Mesh
             end 
 
             # Create the type
-            new(bmesh,nmat,materials,ngeo,geometries,nload,nebc,ebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
+            new(bmesh,nmat,materials,ngeo,geometries,nload,nhebc,hebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
    end
 end
 
@@ -159,7 +154,7 @@ end
 Basic structure for 3D Meshes
 
    Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
-          geometries::Vector{Geometry},ebc::Matrix{Float64},
+          geometries::Vector{Geometry},hebc::Matrix{Int64},
           nbc::Matrix{Float64} ;
           mat_ele = Int64[], geo_ele = Int64[], 
           options=Dict{Symbol,Matrix{Float64}}())
@@ -172,7 +167,7 @@ where
 
    geometries = Vector with Geometries definitions
 
-   ebc        = Matrix with essential boundary conditions
+   hebc        = Matrix with homogeneous essential boundary conditions
 
    nbc        = Matrix with natural boundary conditions
 
@@ -200,8 +195,8 @@ mutable struct Mesh3D <: Mesh
 
    # Supports (essential boundary conditions)
    # node gl value loadcase
-   nebc::Int64
-   ebc::Matrix{Float64}
+   nhebc::Int64
+   hebc::Matrix{Int64}
 
    # Point Loads (natural boundary conditions)
    # node gl value loadcase
@@ -223,20 +218,20 @@ mutable struct Mesh3D <: Mesh
 
    # Default constructor
    function Mesh3D(bmesh::Bmesh3D,materials::Vector{Material},
-                   geometries::Vector{Geometry},ebc::Matrix{Float64},
+                   geometries::Vector{Geometry},hebc::Matrix{Int64},
                    nbc::Matrix{Float64} ;
                    mat_ele = Int64[], geo_ele = Int64[] ,  options=Dict{Symbol,Matrix{Float64}}())
 
       # Dimensions
-      nmat = length(materials)
-      ngeo = length(geometries)
-      nebc = size(ebc,1)
-      nnbc = size(nbc,1)
+      nmat  = length(materials)
+      ngeo  = length(geometries)
+      nhebc = size(hebc,1)
+      nnbc  = size(nbc,1)
 
       # Basic tests
-      nmat>=1 || throw("Mesh3D::number of material properties must be >=1")
-      ngeo>=1 || throw("Mesh3D::number of geometries properties must be >=1")
-      nebc>=5 || throw("Mesh3D:: at least five essential boundary conditions are needed in 3D ")
+      nmat>=1  || throw("Mesh3D::number of material properties must be >=1")
+      ngeo>=1  || throw("Mesh3D::number of geometries properties must be >=1")
+      nhebc>=5 || throw("Mesh3D:: at least five homogeneous essential boundary conditions are needed in 3D ")
 
       
       # Process mat_ele and geo_ele
@@ -260,20 +255,16 @@ mutable struct Mesh3D <: Mesh
        end
 
       # Compatibility with older versions
-      # ebc and nbc have 3 collumns (node,dof,value)
+      # nbc has 3 collumns (node,dof,value)
       # if it is the case, add a fourth column with ones - loadcases
-      if size(ebc,2)==3 
-          ebc = [ebc ones(nebc)]
-      end
       if size(nbc,2)==3 
           nbc = [nbc ones(nnbc)]
       end
       
       # Some basic assertions to ebc
       for i=1:nebc
-         0<ebc[i,1]<= bmesh.nn || throw("Mesh3D:: ebc line $i :: incorrect node ")
-         0<ebc[i,2]<= 3        || throw("Mesh3D:: ebc line $i :: incorrect dof ")
-         0<=ebc[i,4]           || throw("Mesh3D:: ebc line $i :: incorrect load case ")
+         0<hebc[i,1]<= bmesh.nn || throw("Mesh3D:: hebc line $i :: incorrect node ")
+         0<hebc[i,2]<= 3        || throw("Mesh3D:: hebc line $i :: incorrect dof ")
       end   
 
       # Some basic assertions to nbc
@@ -284,9 +275,8 @@ mutable struct Mesh3D <: Mesh
       end   
 
       # Find the maximum loadcase
-      max_load_ebc = maximum(ebc[:,4]) 
       max_load_nbc = maximum(nbc[:,4])
-      nload = Int(max(max_load_ebc,max_load_nbc))
+      nload = Int(max_load_nbc)
 
       # Now both ngl and free_dofs will be
       ngls = Int64[]
@@ -300,7 +290,7 @@ mutable struct Mesh3D <: Mesh
       end 
 
       # Create the type
-      new(bmesh,nmat,materials,ngeo,geometries,nload,nebc,ebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
+      new(bmesh,nmat,materials,ngeo,geometries,nload,nhebc,hebc,nnbc,nbc,ngls,free_dofs,mat_ele,geo_ele,options)
    end
 
 end
