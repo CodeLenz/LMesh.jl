@@ -50,7 +50,7 @@ mutable struct Mesh2D <: Mesh
    # Supports (essential boundary conditions)
    # node gl value loadcase
    nhebc::Int64
-   ebc::Matrix{Int64}
+   hebc::Matrix{Int64}
 
    # Point Loads (natural boundary conditions)
    # node gl value loadcase 
