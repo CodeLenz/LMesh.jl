@@ -4,7 +4,6 @@ module LMesh
    using BMesh
    using LinearAlgebra
    using Statistics:mean
-   using Plots
 
    if isdefined(Base, :Experimental) && isdefined(Base.Experimental, Symbol("@optlevel"))
        @eval Base.Experimental.@optlevel 3
@@ -19,7 +18,7 @@ module LMesh
    
    include("overload_bmesh.jl")
    include("base.jl")
-   include("show.jl")
+   #include("show.jl")
 
    # Exports
    export Material, Geometry
@@ -32,7 +31,7 @@ module LMesh
    export Get_material, Get_geometry
    export Get_material_number, Get_geometry_number
    export Get_ne, Get_nn
-   export plot
+   #export plot
 
    
 end # module LMesh
