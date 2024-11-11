@@ -96,13 +96,13 @@ Return 2 for 2D problems and 3 for 3D problems
 """
 @inline function Get_dim(mesh::Mesh2D)
   
-    return 2 #ifelse(isa(mesh,Mesh2D),2,3)
+    return 2 
   
 end
 
 @inline function Get_dim(mesh::Mesh3D)
   
-   return 3 #ifelse(isa(mesh,Mesh2D),2,3)
+   return 3 
  
 end
 
